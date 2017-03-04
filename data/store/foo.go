@@ -16,9 +16,16 @@ func init() {
 
 	db.CreateTable("foo")
 }
-
 func (x *store) FindFoo() ([]*model.Foo, error) {
-	res, _ := gorethink.Table("foo").Run(db.GetSession())
+	l := []*model.Foo{}
+
+	db.Find(gorethink.Table("foo"), &l)
+
+	return l, nil
+}
+
+func (x *store) FindFoo2() ([]*model.Foo, error) {
+	res, _ := db.Run(gorethink.Table("foo"))
 
 	l := []*model.Foo{}
 
