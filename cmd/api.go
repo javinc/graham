@@ -2,12 +2,12 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/javinc/mango/data"
-	"github.com/javinc/mango/data/store"
-	"github.com/javinc/mango/domain"
-	"github.com/javinc/mango/domain/logic"
-	"github.com/javinc/mango/endpoint"
-	"github.com/javinc/mango/model"
+	"github.com/javinc/graham/data"
+	"github.com/javinc/graham/data/store"
+	"github.com/javinc/graham/domain"
+	"github.com/javinc/graham/domain/logic"
+	"github.com/javinc/graham/endpoint"
+	"github.com/javinc/graham/model"
 )
 
 func main() {

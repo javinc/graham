@@ -1,8 +1,8 @@
 package store
 
 import (
-	"github.com/javinc/mango/data"
-	"github.com/javinc/mango/model"
+	"github.com/javinc/graham/data"
+	"github.com/javinc/graham/model"
 )
 
 type store struct {

@@ -3,7 +3,7 @@ package data
 import (
 	"context"
 
-	"github.com/javinc/mango/model"
+	"github.com/javinc/graham/model"
 )
 
 // Data package definition

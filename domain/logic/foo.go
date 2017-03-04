@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"github.com/javinc/mango/model"
+	"github.com/javinc/graham/model"
 )
 
 func (x *logic) FindFoo() ([]*model.Foo, error) {

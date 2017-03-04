@@ -2,7 +2,7 @@ package endpoint
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/javinc/mango/domain"
+	"github.com/javinc/graham/domain"
 )
 
 // FindUser endpoint handler

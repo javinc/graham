@@ -1,2 +1,2 @@
 # graham
-made with mango on top
+made with graham on top

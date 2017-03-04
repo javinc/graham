@@ -1,6 +1,6 @@
 package logic
 
-import "github.com/javinc/mango/model"
+import "github.com/javinc/graham/model"
 
 func (x *logic) FindUser() ([]*model.User, error) {
 	return x.Data.FindUser()

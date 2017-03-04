@@ -3,7 +3,7 @@ package domain
 import (
 	"context"
 
-	"github.com/javinc/mango/model"
+	"github.com/javinc/graham/model"
 )
 
 // Domain package definition

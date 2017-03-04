@@ -1,7 +1,7 @@
 package store
 
 import (
-	"github.com/javinc/mango/model"
+	"github.com/javinc/graham/model"
 )
 
 func (x *store) FindFoo() ([]*model.Foo, error) {
