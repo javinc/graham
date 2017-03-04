@@ -19,7 +19,7 @@ func main() {
 	// routes
 	routes(r)
 
-	r.Run()
+	r.Run(":8000")
 }
 
 func routes(r *gin.Engine) {
