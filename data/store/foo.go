@@ -7,10 +7,22 @@ import (
 	"github.com/javinc/graham/model"
 )
 
+const tableName = "foo"
+
+func init() {
+	db.Connect(db.Config{
+		Host:    "localhost:28015",
+		Db:      "graham",
+		MaxOpen: 100,
+	})
+
+	db.CreateTable("foo")
+}
+
 func (x *store) FindFoo() ([]*model.Foo, error) {
 	l := []*model.Foo{}
 
-	db.Find(r.Table("foo"), &l)
+	db.Find(r.Table(tableName), &l)
 
 	return l, nil
 }
