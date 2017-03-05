@@ -1,10 +1,31 @@
 package endpoint
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/javinc/graham/domain"
 	"github.com/javinc/graham/model"
 )
+
+// Foo handler
+func Foo(c *gin.Context) {
+	switch c.Request.Method {
+	case http.MethodGet:
+		switch c.Param("id") {
+		case "":
+			FindFoo(c)
+		default:
+			GetFoo(c)
+		}
+	case http.MethodPost:
+		CreateFoo(c)
+	case http.MethodPatch:
+		UpdateFoo(c)
+	case http.MethodDelete:
+		RemoveFoo(c)
+	}
+}
 
 // FindFoo endpoint handler
 func FindFoo(c *gin.Context) {
