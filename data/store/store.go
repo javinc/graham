@@ -43,3 +43,18 @@ func FindOne(table string, result interface{}) error {
 func Get(table, id string, result interface{}) error {
 	return db.FindOne(rethink.Table(tableName).Get(id), &result)
 }
+
+// Create base create query
+func Create(input interface{}) {
+
+}
+
+// Update base create query
+func Update(id string, input interface{}) {
+
+}
+
+// Remove base create query
+func Remove(id string, input interface{}) {
+
+}
