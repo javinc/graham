@@ -34,6 +34,8 @@ func (x *store) CreateFoo(i *model.Foo) (*model.Foo, error) {
 		return i, err
 	}
 
+	// default
+
 	i.ID = id
 
 	return i, nil
@@ -44,6 +46,8 @@ func (x *store) UpdateFoo(in *model.Foo) (*model.Foo, error) {
 	if err != nil {
 		return r, err
 	}
+
+	// meta
 
 	id := in.ID
 	in.ID = ""
