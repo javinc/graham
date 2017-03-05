@@ -1,3 +1,15 @@
+/*
+  DESIGN RULE
+
+  endpoint package SHOULD ONLY do
+    [1] pass parsed value
+    [2] output result from domain functions
+
+  endpoint package SHOULD ONLY knows internal package
+    [1] data that prv
+*/
+
+// Package domain provides processed data base on business logic
 package domain
 
 import (
