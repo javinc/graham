@@ -43,17 +43,27 @@ func (x *logic) CreateFoo(f *model.Foo) (*model.Foo, error) {
 	return r, nil
 }
 
-func (x *logic) UpdateFoo(f *model.Foo) (*model.Foo, error) {
+func (x *logic) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 	// validation
-	if f.ID == "" {
-		return f, errors.New("id is required")
+	if p.ID == "" {
+		return p, errors.New("id is required")
 	}
 
 	// write
-	f, err := x.Data.UpdateFoo(f)
+	p, err := x.Data.UpdateFoo(p)
 	if err != nil {
-		return f, err
+		return p, err
 	}
 
-	return f, nil
+	return p, nil
+}
+
+func (x *logic) RemoveFoo(id string) (*model.Foo, error) {
+	// write
+	r, err := x.Data.RemoveFoo(id)
+	if err != nil {
+		return r, err
+	}
+
+	return r, nil
 }

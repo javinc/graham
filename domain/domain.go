@@ -26,7 +26,7 @@ type Domain interface {
 	GetFoo(id string) (*model.Foo, error)
 	CreateFoo(f *model.Foo) (*model.Foo, error)
 	UpdateFoo(f *model.Foo) (*model.Foo, error)
-	// RemoveFoo(id string) (*model.Foo, error)
+	RemoveFoo(id string) (*model.Foo, error)
 
 	FindUser() ([]*model.User, error)
 	GetUser(id string) (*model.User, error)
@@ -50,6 +50,11 @@ func CreateFoo(c context.Context, f *model.Foo) (*model.Foo, error) {
 // UpdateFoo update a Foo
 func UpdateFoo(c context.Context, f *model.Foo) (*model.Foo, error) {
 	return FromContext(c).UpdateFoo(f)
+}
+
+// RemoveFoo remove a Foo
+func RemoveFoo(c context.Context, id string) (*model.Foo, error) {
+	return FromContext(c).RemoveFoo(id)
 }
 
 // FindUser returns a list of User

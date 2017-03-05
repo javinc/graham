@@ -59,9 +59,9 @@ func (x *store) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 	}
 
 	// merge old values with the new
-	mergo.MergeWithOverwrite(&r, p)
+	mergo.MergeWithOverwrite(r, p)
 
-	return p, nil
+	return r, nil
 }
 
 func (x *store) RemoveFoo(id string) (*model.Foo, error) {

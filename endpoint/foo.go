@@ -59,11 +59,8 @@ func CreateFoo(c *gin.Context) {
 func UpdateFoo(c *gin.Context) {
 	testID := "f0fafea2-88b5-4471-9d86-79c5196149d4"
 	testPayload := &model.Foo{
-		ID:          testID,
-		Title:       "modified foo",
-		Description: "MODIDIFIED foo",
-		Age:         100,
-		Taken:       model.TruePtr,
+		ID:  testID,
+		Age: 170,
 	}
 
 	d, err := domain.UpdateFoo(c, testPayload)
