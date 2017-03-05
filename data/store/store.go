@@ -31,7 +31,7 @@ func New(u *model.User) data.Data {
 
 // Find base find query
 func Find(table string, result interface{}) error {
-	return db.Find(rethink.Table(tableName), &result)
+	return db.Find(rethink.Table(tableName), result)
 }
 
 // FindOne base findone query
