@@ -31,22 +31,22 @@ func New(u *model.User) data.Data {
 
 // Find base find query
 func Find(table string, result interface{}) error {
-	return db.Find(rethink.Table(tableName), result)
+	return db.Find(rethink.Table(table), result)
 }
 
 // FindOne base findone query
 func FindOne(table string, result interface{}) error {
-	return db.FindOne(rethink.Table(tableName), &result)
+	return db.FindOne(rethink.Table(table), &result)
 }
 
 // Get base get query
 func Get(table, id string, result interface{}) error {
-	return db.FindOne(rethink.Table(tableName).Get(id), &result)
+	return db.FindOne(rethink.Table(table).Get(id), &result)
 }
 
 // Create base create query
-func Create(input interface{}) {
-
+func Create(table string, input interface{}) (string, error) {
+	return db.Create(rethink.Table(table).Insert(input))
 }
 
 // Update base create query

@@ -37,9 +37,13 @@ func GetFoo(c *gin.Context) {
 
 // CreateFoo endpoint handler
 func CreateFoo(c *gin.Context) {
-	d, err := domain.CreateFoo(c, &model.Foo{
-		Title: "create foo",
-	})
+	testPayload := &model.Foo{
+		Title:       "create foo",
+		Description: "create foo desc",
+		Age:         200,
+	}
+
+	d, err := domain.CreateFoo(c, testPayload)
 	if err != nil {
 		c.JSON(400, &model.Error{
 			Message: err.Error(),
