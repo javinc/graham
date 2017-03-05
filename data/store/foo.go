@@ -28,36 +28,52 @@ func (x *store) GetFoo(id string) (*model.Foo, error) {
 	return r, err
 }
 
-func (x *store) CreateFoo(i *model.Foo) (*model.Foo, error) {
-	id, err := Create(name, i)
-	if err != nil {
-		return i, err
-	}
-
+func (x *store) CreateFoo(p *model.Foo) (*model.Foo, error) {
 	// default
 
-	i.ID = id
+	// meta
 
-	return i, nil
+	id, err := Create(name, p)
+	if err != nil {
+		return p, err
+	}
+
+	p.ID = id
+
+	return p, nil
 }
 
-func (x *store) UpdateFoo(in *model.Foo) (*model.Foo, error) {
-	r, err := x.GetFoo(in.ID)
+func (x *store) UpdateFoo(p *model.Foo) (*model.Foo, error) {
+	r, err := x.GetFoo(p.ID)
 	if err != nil {
 		return r, err
 	}
 
 	// meta
 
-	id := in.ID
-	in.ID = ""
-	err = Update(name, id, in)
+	id := p.ID
+	p.ID = ""
+	err = Update(name, id, p)
 	if err != nil {
 		return r, err
 	}
 
 	// merge old values with the new
-	mergo.MergeWithOverwrite(&r, in)
+	mergo.MergeWithOverwrite(&r, p)
 
-	return in, nil
+	return p, nil
+}
+
+func (x *store) RemoveFoo(id string) (*model.Foo, error) {
+	r, err := x.GetFoo(id)
+	if err != nil {
+		return r, err
+	}
+
+	err = Remove(name, id)
+	if err != nil {
+		return r, err
+	}
+
+	return r, nil
 }

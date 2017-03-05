@@ -57,6 +57,6 @@ func Update(table, id string, input interface{}) error {
 }
 
 // Remove base create query
-func Remove(id string, input interface{}) {
-
+func Remove(table, id string) error {
+	return db.Remove(rethink.Table(table).Get(id).Delete())
 }
