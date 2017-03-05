@@ -54,3 +54,26 @@ func CreateFoo(c *gin.Context) {
 
 	c.JSON(200, d)
 }
+
+// UpdateFoo endpoint handler
+func UpdateFoo(c *gin.Context) {
+	testID := "f0fafea2-88b5-4471-9d86-79c5196149d4"
+	testPayload := &model.Foo{
+		ID:          testID,
+		Title:       "modified foo",
+		Description: "MODIDIFIED foo",
+		Age:         100,
+		Taken:       model.TruePtr,
+	}
+
+	d, err := domain.UpdateFoo(c, testPayload)
+	if err != nil {
+		c.JSON(400, &model.Error{
+			Message: err.Error(),
+		})
+
+		return
+	}
+
+	c.JSON(200, d)
+}

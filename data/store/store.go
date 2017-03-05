@@ -36,12 +36,12 @@ func Find(table string, result interface{}) error {
 
 // FindOne base findone query
 func FindOne(table string, result interface{}) error {
-	return db.FindOne(rethink.Table(table), &result)
+	return db.FindOne(rethink.Table(table), result)
 }
 
 // Get base get query
 func Get(table, id string, result interface{}) error {
-	return db.FindOne(rethink.Table(table).Get(id), &result)
+	return db.FindOne(rethink.Table(table).Get(id), result)
 }
 
 // Create base create query
@@ -50,8 +50,12 @@ func Create(table string, input interface{}) (string, error) {
 }
 
 // Update base create query
-func Update(id string, input interface{}) {
-
+func Update(table, id string, input interface{}) error {
+	// modifying without checking if the record exists is fine with rethinkDB
+	// update mechanism it will skip the non existent record
+	return db.Update(rethink.Table(table).
+		Get(id).
+		Update(input))
 }
 
 // Remove base create query

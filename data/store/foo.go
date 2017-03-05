@@ -1,6 +1,7 @@
 package store
 
 import (
+	"github.com/imdario/mergo"
 	"github.com/javinc/graham/model"
 )
 
@@ -27,13 +28,32 @@ func (x *store) GetFoo(id string) (*model.Foo, error) {
 	return r, err
 }
 
-func (x *store) CreateFoo(r *model.Foo) (*model.Foo, error) {
-	id, err := Create(name, r)
+func (x *store) CreateFoo(i *model.Foo) (*model.Foo, error) {
+	id, err := Create(name, i)
+	if err != nil {
+		return i, err
+	}
+
+	i.ID = id
+
+	return i, nil
+}
+
+func (x *store) UpdateFoo(in *model.Foo) (*model.Foo, error) {
+	r, err := x.GetFoo(in.ID)
 	if err != nil {
 		return r, err
 	}
 
-	r.ID = id
+	id := in.ID
+	in.ID = ""
+	err = Update(name, id, in)
+	if err != nil {
+		return r, err
+	}
 
-	return r, nil
+	// merge old values with the new
+	mergo.MergeWithOverwrite(&r, in)
+
+	return in, nil
 }

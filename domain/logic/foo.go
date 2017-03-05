@@ -34,11 +34,26 @@ func (x *logic) CreateFoo(f *model.Foo) (*model.Foo, error) {
 	// modification
 	f.Title = strings.ToUpper(f.Title)
 
-	// data write
+	// write
 	r, err := x.Data.CreateFoo(f)
 	if err != nil {
 		return r, err
 	}
 
 	return r, nil
+}
+
+func (x *logic) UpdateFoo(f *model.Foo) (*model.Foo, error) {
+	// validation
+	if f.ID == "" {
+		return f, errors.New("id is required")
+	}
+
+	// write
+	f, err := x.Data.UpdateFoo(f)
+	if err != nil {
+		return f, err
+	}
+
+	return f, nil
 }

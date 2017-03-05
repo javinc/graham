@@ -26,6 +26,7 @@ func routes(r *gin.Engine) {
 	r.GET("/foo", endpoint.FindFoo)
 	r.GET("/foo/:id", endpoint.GetFoo)
 	r.POST("/foo", endpoint.CreateFoo)
+	r.PUT("/foo", endpoint.UpdateFoo)
 
 	r.GET("/user", endpoint.FindUser)
 	r.GET("/user/:id", endpoint.GetUser)
