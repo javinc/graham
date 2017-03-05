@@ -53,9 +53,7 @@ func Create(table string, input interface{}) (string, error) {
 func Update(table, id string, input interface{}) error {
 	// modifying without checking if the record exists is fine with rethinkDB
 	// update mechanism it will skip the non existent record
-	return db.Update(rethink.Table(table).
-		Get(id).
-		Update(input))
+	return db.Update(rethink.Table(table).Get(id).Update(input))
 }
 
 // Remove base create query
