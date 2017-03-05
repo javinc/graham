@@ -1,15 +1,17 @@
 /*
   DESIGN RULE
+	Package domain provide data base on business rules
 
-  endpoint package SHOULD ONLY do
-    [1] pass parsed value
-    [2] output result from domain functions
+	Domain SHOULD ONLY knows internal packages
+		[1] /data
+		[1] /platform
 
-  endpoint package SHOULD ONLY knows internal package
-    [1] data that prv
+  Domain SHOULD ONLY do
+    [1] business or domain logic
+    [2] access records from data
+    [3] use third party service from platform
 */
 
-// Package domain provides processed data base on business logic
 package domain
 
 import (

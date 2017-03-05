@@ -1,13 +1,13 @@
 /*
   DESIGN RULE
+  Package endpoint provides service of domain package from http request
 
-  endpoint package SHOULD ONLY do
-    [1] pass parsed value
-    [2] output result from domain functions
+  Endpoint SHOULD ONLY knows internal packages
+    [1] /domain
 
-  endpoint SHOULD ONLY knows internal package
-    [1] domain
+  Endpoint SHOULD ONLY do
+    [1] parse input data and pass to domain
+    [2] output formatted results from domain
 */
 
-// Package endpoint provides service of domain package rom http request
 package endpoint
