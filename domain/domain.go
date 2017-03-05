@@ -1,6 +1,6 @@
 /*
   DESIGN RULE
-	Package domain provide data base on business rules
+	Package domain provides data base on business rules
 
 	Domain SHOULD ONLY knows internal packages
 		[1] /data
