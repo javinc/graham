@@ -7,10 +7,10 @@
     [3] SSE payload formats
     [4] worker
 
-  Platform provides third party services for domain package
+  Platform provides third party services for /domain
 
   Platform SHOULD NOT
-    [1] be required for domain to work
+    [1] be required for /domain to work
     [2] affect the flow of application
 */
 

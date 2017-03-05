@@ -8,8 +8,8 @@
 
   Domain SHOULD ONLY do
     [1] business or domain logic
-    [2] access records from data
-    [3] use third party service from platform
+    [2] access records from /data
+    [3] use third party service from /platform
 */
 
 package domain
