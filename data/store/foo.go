@@ -1,7 +1,7 @@
 package store
 
 import (
-	r "github.com/gorethink/gorethink"
+	rethink "github.com/gorethink/gorethink"
 	db "github.com/javinc/mango/database/rethink"
 
 	"github.com/javinc/graham/model"
@@ -22,15 +22,15 @@ func init() {
 func (x *store) FindFoo() ([]*model.Foo, error) {
 	l := []*model.Foo{}
 
-	db.Find(r.Table(tableName), &l)
+	db.Find(rethink.Table(tableName), &l)
 
 	return l, nil
 }
 
 func (x *store) GetFoo(id string) (*model.Foo, error) {
 	r := new(model.Foo)
-	r.Title = "detail title"
-	r.Description = "detail description"
+
+	db.FindOne(rethink.Table(tableName), r)
 
 	return r, nil
 }
