@@ -24,8 +24,8 @@ import (
 type Domain interface {
 	FindFoo() ([]*model.Foo, error)
 	GetFoo(id string) (*model.Foo, error)
-	CreateFoo(f *model.Foo) (*model.Foo, error)
-	UpdateFoo(f *model.Foo) (*model.Foo, error)
+	CreateFoo(p *model.Foo) (*model.Foo, error)
+	UpdateFoo(p *model.Foo) (*model.Foo, error)
 	RemoveFoo(id string) (*model.Foo, error)
 
 	FindUser() ([]*model.User, error)
@@ -43,13 +43,13 @@ func GetFoo(c context.Context, id string) (*model.Foo, error) {
 }
 
 // CreateFoo create a Foo
-func CreateFoo(c context.Context, f *model.Foo) (*model.Foo, error) {
-	return FromContext(c).CreateFoo(f)
+func CreateFoo(c context.Context, p *model.Foo) (*model.Foo, error) {
+	return FromContext(c).CreateFoo(p)
 }
 
 // UpdateFoo update a Foo
-func UpdateFoo(c context.Context, f *model.Foo) (*model.Foo, error) {
-	return FromContext(c).UpdateFoo(f)
+func UpdateFoo(c context.Context, p *model.Foo) (*model.Foo, error) {
+	return FromContext(c).UpdateFoo(p)
 }
 
 // RemoveFoo remove a Foo

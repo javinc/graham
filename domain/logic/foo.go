@@ -25,17 +25,17 @@ func (x *logic) GetFoo(id string) (*model.Foo, error) {
 	return r, nil
 }
 
-func (x *logic) CreateFoo(f *model.Foo) (*model.Foo, error) {
+func (x *logic) CreateFoo(p *model.Foo) (*model.Foo, error) {
 	// validation
-	if f.Title == "" {
-		return f, errors.New("title is required")
+	if p.Title == "" {
+		return p, errors.New("title is required")
 	}
 
 	// modification
-	f.Title = strings.ToUpper(f.Title)
+	p.Title = strings.ToUpper(p.Title)
 
 	// write
-	r, err := x.Data.CreateFoo(f)
+	r, err := x.Data.CreateFoo(p)
 	if err != nil {
 		return r, err
 	}
