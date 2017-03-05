@@ -1,6 +1,9 @@
 package logic
 
 import (
+	"errors"
+	"strings"
+
 	"github.com/javinc/graham/model"
 )
 
@@ -23,6 +26,15 @@ func (x *logic) GetFoo(id string) (*model.Foo, error) {
 }
 
 func (x *logic) CreateFoo(f *model.Foo) (*model.Foo, error) {
+	// validation
+	if f.Title == "" {
+		return f, errors.New("title is required")
+	}
+
+	// modification
+	f.Title = strings.ToUpper(f.Title)
+
+	// data write
 	r, err := x.Data.CreateFoo(f)
 	if err != nil {
 		return r, err
