@@ -7,7 +7,7 @@
 		[1] /platform
 
   Domain SHOULD ONLY do
-    [1] business or domain logic
+    [1] business or domain logic and use cases
     [2] access records from /data
     [3] use third party service from /platform
 */
