@@ -9,14 +9,14 @@ const name = "foo"
 
 func (x *store) FindFoo() ([]*model.Foo, error) {
 	r := []*model.Foo{}
-	err := Find(name, &l)
+	err := Find(name, &r)
 
 	return r, err
 }
 
 func (x *store) FindOneFoo() ([]*model.Foo, error) {
 	r := []*model.Foo{}
-	err := FindOne(name, &l)
+	err := FindOne(name, &r)
 
 	return r, err
 }
