@@ -8,12 +8,12 @@ import (
 )
 
 func (x *logic) FindFoo() ([]*model.Foo, error) {
-	l, err := x.Data.FindFoo()
+	r, err := x.Data.FindFoo()
 	if err != nil {
-		return l, err
+		return r, err
 	}
 
-	return l, nil
+	return r, nil
 }
 
 func (x *logic) GetFoo(id string) (*model.Foo, error) {
