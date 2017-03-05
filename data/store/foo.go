@@ -1,28 +1,23 @@
 package store
 
 import (
-	rethink "github.com/gorethink/gorethink"
-	db "github.com/javinc/mango/database/rethink"
-
 	"github.com/javinc/graham/model"
 )
 
 const tableName = "foo"
 
-func init() {
-	db.Connect(db.Config{
-		Host:    "localhost:28015",
-		Db:      "graham",
-		MaxOpen: 100,
-	})
-
-	db.CreateTable("foo")
-}
-
 func (x *store) FindFoo() ([]*model.Foo, error) {
 	l := []*model.Foo{}
 
-	db.Find(rethink.Table(tableName), &l)
+	Find(tableName, &l)
+
+	return l, nil
+}
+
+func (x *store) FindOneFoo() ([]*model.Foo, error) {
+	l := []*model.Foo{}
+
+	FindOne(tableName, &l)
 
 	return l, nil
 }
@@ -30,7 +25,7 @@ func (x *store) FindFoo() ([]*model.Foo, error) {
 func (x *store) GetFoo(id string) (*model.Foo, error) {
 	r := new(model.Foo)
 
-	db.FindOne(rethink.Table(tableName), r)
+	Get(tableName, id, &r)
 
 	return r, nil
 }
