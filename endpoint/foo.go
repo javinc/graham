@@ -74,3 +74,18 @@ func UpdateFoo(c *gin.Context) {
 
 	c.JSON(200, d)
 }
+
+// RemoveFoo endpoint handler
+func RemoveFoo(c *gin.Context) {
+	id := c.Param("id")
+	d, err := domain.RemoveFoo(c, id)
+	if err != nil {
+		c.JSON(400, &model.Error{
+			Message: err.Error(),
+		})
+
+		return
+	}
+
+	c.JSON(200, d)
+}
