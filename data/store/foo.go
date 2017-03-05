@@ -8,17 +8,17 @@ import (
 const name = "foo"
 
 func (x *store) FindFoo() ([]*model.Foo, error) {
-	l := []*model.Foo{}
+	r := []*model.Foo{}
 	err := Find(name, &l)
 
-	return l, err
+	return r, err
 }
 
 func (x *store) FindOneFoo() ([]*model.Foo, error) {
-	l := []*model.Foo{}
+	r := []*model.Foo{}
 	err := FindOne(name, &l)
 
-	return l, err
+	return r, err
 }
 
 func (x *store) GetFoo(id string) (*model.Foo, error) {
