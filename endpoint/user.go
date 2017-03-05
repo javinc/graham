@@ -7,18 +7,18 @@ import (
 
 // FindUser endpoint handler
 func FindUser(c *gin.Context) {
-	d, err := domain.FindUser(c)
+	o, err := domain.FindUser(c)
 	if err != nil {
 		c.Error(err)
 	}
 
-	c.JSON(200, d)
+	c.JSON(200, o)
 }
 
 // GetUser endpoint handler
 func GetUser(c *gin.Context) {
 	id := c.Param("id")
-	d, _ := domain.GetUser(c, id)
+	o, _ := domain.GetUser(c, id)
 
-	c.JSON(200, d)
+	c.JSON(200, o)
 }

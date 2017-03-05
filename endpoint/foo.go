@@ -8,7 +8,7 @@ import (
 
 // FindFoo endpoint handler
 func FindFoo(c *gin.Context) {
-	r, err := domain.FindFoo(c)
+	o, err := domain.FindFoo(c)
 	if err != nil {
 		c.JSON(400, &model.Error{
 			Message: err.Error(),
@@ -17,13 +17,13 @@ func FindFoo(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, r)
+	c.JSON(200, o)
 }
 
 // GetFoo endpoint handler
 func GetFoo(c *gin.Context) {
 	id := c.Param("id")
-	d, err := domain.GetFoo(c, id)
+	o, err := domain.GetFoo(c, id)
 	if err != nil {
 		c.JSON(400, &model.Error{
 			Message: err.Error(),
@@ -32,7 +32,7 @@ func GetFoo(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, d)
+	c.JSON(200, o)
 }
 
 // CreateFoo endpoint handler
@@ -43,7 +43,7 @@ func CreateFoo(c *gin.Context) {
 		Age:         200,
 	}
 
-	d, err := domain.CreateFoo(c, testPayload)
+	o, err := domain.CreateFoo(c, testPayload)
 	if err != nil {
 		c.JSON(400, &model.Error{
 			Message: err.Error(),
@@ -52,7 +52,7 @@ func CreateFoo(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, d)
+	c.JSON(200, o)
 }
 
 // UpdateFoo endpoint handler
@@ -63,7 +63,7 @@ func UpdateFoo(c *gin.Context) {
 		Age: 170,
 	}
 
-	d, err := domain.UpdateFoo(c, testPayload)
+	o, err := domain.UpdateFoo(c, testPayload)
 	if err != nil {
 		c.JSON(400, &model.Error{
 			Message: err.Error(),
@@ -72,13 +72,13 @@ func UpdateFoo(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, d)
+	c.JSON(200, o)
 }
 
 // RemoveFoo endpoint handler
 func RemoveFoo(c *gin.Context) {
 	id := c.Param("id")
-	d, err := domain.RemoveFoo(c, id)
+	o, err := domain.RemoveFoo(c, id)
 	if err != nil {
 		c.JSON(400, &model.Error{
 			Message: err.Error(),
@@ -87,5 +87,5 @@ func RemoveFoo(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, d)
+	c.JSON(200, o)
 }
