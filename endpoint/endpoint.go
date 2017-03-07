@@ -48,16 +48,16 @@ func output(c *gin.Context, data interface{}, err error) {
 }
 
 func parsePayload(c *gin.Context, p interface{}) error {
+	// check method if needs a payload to read
 	m := http.MethodPost + http.MethodPatch + http.MethodDelete
 	if strings.Contains(m, c.Request.Method) {
 		err := c.BindJSON(p)
 		if err != nil {
+			// modify error for more info
 			err = &model.Error{
 				Code:    "ENDPOINT_INVALID_JSON",
 				Message: err.Error(),
 			}
-
-			print("ERRR")
 
 			return err
 		}

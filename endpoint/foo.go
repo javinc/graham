@@ -12,9 +12,9 @@ import (
 func Foo(c *gin.Context) {
 	var err error
 	var o interface{}
-	p := new(model.Foo)
 
 	id := c.Param("id")
+	p := new(model.Foo)
 	err = parsePayload(c, &p)
 	if err != nil {
 		output(c, o, err)
