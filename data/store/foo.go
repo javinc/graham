@@ -8,8 +8,14 @@ import (
 const (
 	fooTableName = "foo"
 
-	fooFindErr    = "DATA_STORE_FIND_FOO"
-	fooFindOneErr = "DATA_STORE_FIND_ONE_FOO"
+	fooErrFind        = "DATA_FOO_FIND"
+	fooErrFindOne     = "DATA_FOO_FIND_ONE"
+	fooErrGet         = "DATA_FOO_GET"
+	fooErrCreate      = "DATA_FOO_CREATE"
+	fooErrUpdate      = "DATA_FOO_UPDATE"
+	fooErrUpdateCheck = "DATA_FOO_UPDATE_CHECK"
+	fooErrRemove      = "DATA_FOO_REMOVE"
+	fooErrRemoveCheck = "DATA_FOO_REMOVE_CHECK"
 )
 
 func (x *store) FindFoo() ([]*model.Foo, error) {
@@ -17,7 +23,7 @@ func (x *store) FindFoo() ([]*model.Foo, error) {
 	err := Find(fooTableName, &r)
 	if err != nil {
 		return r, &model.Error{
-			Code:    fooFindErr,
+			Code:    fooErrFind,
 			Message: err.Error(),
 		}
 	}
@@ -30,7 +36,7 @@ func (x *store) FindOneFoo() ([]*model.Foo, error) {
 	err := FindOne(fooTableName, &r)
 	if err != nil {
 		return r, &model.Error{
-			Code:    fooFindOneErr,
+			Code:    fooErrFindOne,
 			Message: err.Error(),
 		}
 	}
@@ -43,7 +49,7 @@ func (x *store) GetFoo(id string) (*model.Foo, error) {
 	err := Get(fooTableName, id, &r)
 	if err != nil {
 		return r, &model.Error{
-			Code:    "DATA_STORE_GET_FOO",
+			Code:    fooErrGet,
 			Message: err.Error(),
 		}
 	}
@@ -59,7 +65,7 @@ func (x *store) CreateFoo(p *model.Foo) (*model.Foo, error) {
 	id, err := Create(fooTableName, p)
 	if err != nil {
 		return p, &model.Error{
-			Code:    "DATA_STORE_CREATE_FOO",
+			Code:    fooErrCreate,
 			Message: err.Error(),
 		}
 	}
@@ -73,7 +79,7 @@ func (x *store) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 	r, err := x.GetFoo(p.ID)
 	if err != nil {
 		return r, &model.Error{
-			Code:    "DATA_STORE_UPDATE_FOO_CHECK",
+			Code:    fooErrUpdateCheck,
 			Message: err.Error(),
 		}
 	}
@@ -85,7 +91,7 @@ func (x *store) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 	err = Update(fooTableName, id, p)
 	if err != nil {
 		return r, &model.Error{
-			Code:    "DATA_STORE_UPDATE_FOO",
+			Code:    fooErrUpdate,
 			Message: err.Error(),
 		}
 	}
@@ -100,7 +106,7 @@ func (x *store) RemoveFoo(id string) (*model.Foo, error) {
 	r, err := x.GetFoo(id)
 	if err != nil {
 		return r, &model.Error{
-			Code:    "DATA_STORE_DELETE_FOO_CHECK",
+			Code:    fooErrRemoveCheck,
 			Message: err.Error(),
 		}
 	}
@@ -108,7 +114,7 @@ func (x *store) RemoveFoo(id string) (*model.Foo, error) {
 	err = Remove(fooTableName, id)
 	if err != nil {
 		return r, &model.Error{
-			Code:    "DATA_STORE_DELETE_FOO",
+			Code:    fooErrRemove,
 			Message: err.Error(),
 		}
 	}
