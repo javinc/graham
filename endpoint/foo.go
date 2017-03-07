@@ -24,22 +24,19 @@ func Foo(c *gin.Context) {
 	case http.MethodGet:
 		if id == "" {
 			o, err = domain.FindFoo(c)
-			output(c, o, err)
 
-			return
+			break
 		}
 
 		o, err = domain.GetFoo(c, id)
-		output(c, o, err)
 	case http.MethodPost:
 		o, err = domain.CreateFoo(c, p)
-		output(c, o, err)
 	case http.MethodPatch:
 		p.ID = id
 		o, err = domain.UpdateFoo(c, p)
-		output(c, o, err)
 	case http.MethodDelete:
 		o, err = domain.RemoveFoo(c, id)
-		output(c, o, err)
 	}
+
+	output(c, o, err)
 }
