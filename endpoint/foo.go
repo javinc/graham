@@ -10,24 +10,28 @@ import (
 
 // Foo handler
 func Foo(c *gin.Context) {
-	id := c.Param("id")
-	p := new(model.Foo)
-	c.BindJSON(p)
-
 	var err error
 	var o interface{}
-	switch c.Request.Method {
+
+	id := c.Param("id")
+	m := c.Request.Method
+
+	p := new(model.Foo)
+	if m != http.MethodGet {
+		c.BindJSON(p)
+	}
+
+	switch m {
 	case http.MethodGet:
-		switch id {
-		case "":
+		if id == "" {
 			o, err = domain.FindFoo(c)
 			output(c, o, err)
 
-		default:
-			o, err = domain.GetFoo(c, id)
-			output(c, o, err)
+			return
 		}
 
+		o, err = domain.GetFoo(c, id)
+		output(c, o, err)
 	case http.MethodPost:
 		o, err = domain.CreateFoo(c, p)
 		output(c, o, err)

@@ -28,7 +28,10 @@ func (x *logic) GetFoo(id string) (*model.Foo, error) {
 func (x *logic) CreateFoo(p *model.Foo) (*model.Foo, error) {
 	// validation
 	if p.Title == "" {
-		return p, errors.New("title is required")
+		return p, &model.Error{
+			Code:    "This is not food",
+			Message: "really!",
+		}
 	}
 
 	// modification
