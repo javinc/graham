@@ -12,12 +12,13 @@ import (
 func Foo(c *gin.Context) {
 	var err error
 	var o interface{}
+	var p *model.Foo
 
 	id := c.Param("id")
 	m := c.Request.Method
 
-	p := new(model.Foo)
 	if m != http.MethodGet {
+		p = new(model.Foo)
 		c.BindJSON(p)
 	}
 
