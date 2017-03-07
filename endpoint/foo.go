@@ -19,11 +19,11 @@ func Foo(c *gin.Context) {
 			get(c)
 		}
 	case http.MethodPost:
-		post(c)
+		create(c)
 	case http.MethodPatch:
-		patch(c)
+		update(c)
 	case http.MethodDelete:
-		delete(c)
+		remove(c)
 	}
 }
 
@@ -54,7 +54,7 @@ func get(c *gin.Context) {
 	c.JSON(200, o)
 }
 
-func post(c *gin.Context) {
+func create(c *gin.Context) {
 	p := new(model.Foo)
 	c.BindJSON(p)
 	o, err := domain.CreateFoo(c, p)
@@ -69,7 +69,7 @@ func post(c *gin.Context) {
 	c.JSON(200, o)
 }
 
-func patch(c *gin.Context) {
+func update(c *gin.Context) {
 	p := new(model.Foo)
 	c.BindJSON(p)
 	p.ID = c.Param("id")
@@ -85,7 +85,7 @@ func patch(c *gin.Context) {
 	c.JSON(200, o)
 }
 
-func delete(c *gin.Context) {
+func remove(c *gin.Context) {
 	id := c.Param("id")
 	o, err := domain.RemoveFoo(c, id)
 	if err != nil {
