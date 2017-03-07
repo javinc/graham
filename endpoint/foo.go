@@ -14,21 +14,20 @@ func Foo(c *gin.Context) {
 	case http.MethodGet:
 		switch c.Param("id") {
 		case "":
-			FindFoo(c)
+			find(c)
 		default:
-			GetFoo(c)
+			get(c)
 		}
 	case http.MethodPost:
-		CreateFoo(c)
+		post(c)
 	case http.MethodPatch:
-		UpdateFoo(c)
+		patch(c)
 	case http.MethodDelete:
-		RemoveFoo(c)
+		delete(c)
 	}
 }
 
-// FindFoo endpoint handler
-func FindFoo(c *gin.Context) {
+func find(c *gin.Context) {
 	o, err := domain.FindFoo(c)
 	if err != nil {
 		c.JSON(400, &model.Error{
@@ -41,8 +40,7 @@ func FindFoo(c *gin.Context) {
 	c.JSON(200, o)
 }
 
-// GetFoo endpoint handler
-func GetFoo(c *gin.Context) {
+func get(c *gin.Context) {
 	id := c.Param("id")
 	o, err := domain.GetFoo(c, id)
 	if err != nil {
@@ -56,8 +54,7 @@ func GetFoo(c *gin.Context) {
 	c.JSON(200, o)
 }
 
-// CreateFoo endpoint handler
-func CreateFoo(c *gin.Context) {
+func post(c *gin.Context) {
 	p := new(model.Foo)
 	c.BindJSON(p)
 	o, err := domain.CreateFoo(c, p)
@@ -72,8 +69,7 @@ func CreateFoo(c *gin.Context) {
 	c.JSON(200, o)
 }
 
-// UpdateFoo endpoint handler
-func UpdateFoo(c *gin.Context) {
+func patch(c *gin.Context) {
 	p := new(model.Foo)
 	c.BindJSON(p)
 	p.ID = c.Param("id")
@@ -89,8 +85,7 @@ func UpdateFoo(c *gin.Context) {
 	c.JSON(200, o)
 }
 
-// RemoveFoo endpoint handler
-func RemoveFoo(c *gin.Context) {
+func delete(c *gin.Context) {
 	id := c.Param("id")
 	o, err := domain.RemoveFoo(c, id)
 	if err != nil {
