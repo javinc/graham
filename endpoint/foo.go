@@ -15,14 +15,12 @@ func Foo(c *gin.Context) {
 	var p *model.Foo
 
 	id := c.Param("id")
-	m := c.Request.Method
-
-	if m != http.MethodGet {
+	if c.Request.Method != http.MethodGet {
 		p = new(model.Foo)
 		c.BindJSON(p)
 	}
 
-	switch m {
+	switch c.Request.Method {
 	case http.MethodGet:
 		if id == "" {
 			o, err = domain.FindFoo(c)
