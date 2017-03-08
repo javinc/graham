@@ -76,11 +76,11 @@ func (x *store) CreateFoo(p *model.Foo) (*model.Foo, error) {
 }
 
 func (x *store) UpdateFoo(p *model.Foo) (*model.Foo, error) {
-	r, err := x.GetFoo(p.ID)
-	if err != nil {
+	r, _ := x.GetFoo(p.ID)
+	if r.ID == "" {
 		return r, &model.Error{
 			Code:    fooErrUpdateCheck,
-			Message: err.Error(),
+			Message: "record does not exist",
 		}
 	}
 
@@ -88,7 +88,7 @@ func (x *store) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 
 	id := p.ID
 	p.ID = ""
-	err = Update(fooTableName, id, p)
+	err := Update(fooTableName, id, p)
 	if err != nil {
 		return r, &model.Error{
 			Code:    fooErrUpdate,
@@ -103,15 +103,15 @@ func (x *store) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 }
 
 func (x *store) RemoveFoo(id string) (*model.Foo, error) {
-	r, err := x.GetFoo(id)
-	if err != nil {
+	r, _ := x.GetFoo(id)
+	if r.ID == "" {
 		return r, &model.Error{
 			Code:    fooErrRemoveCheck,
-			Message: err.Error(),
+			Message: "record does not exist",
 		}
 	}
 
-	err = Remove(fooTableName, id)
+	err := Remove(fooTableName, id)
 	if err != nil {
 		return r, &model.Error{
 			Code:    fooErrRemove,

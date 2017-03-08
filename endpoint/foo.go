@@ -1,48 +1,57 @@
 package endpoint
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 	"github.com/javinc/graham/domain"
+	"github.com/javinc/graham/endpoint/util"
 	"github.com/javinc/graham/model"
 )
 
-// Foo handler
-func Foo(c *gin.Context) {
-	var err error
-	var o interface{}
+// FindFoo handler
+func FindFoo(c *gin.Context) {
+	o, err := domain.FindFoo(c)
+	util.Output(c, o, err)
+}
 
+// FooGet handler
+func GetFoo(c *gin.Context) {
 	id := c.Param("id")
+	o, err := domain.GetFoo(c, id)
+	util.Output(c, o, err)
+}
+
+// CreateFoo handler
+func CreateFoo(c *gin.Context) {
 	p := new(model.Foo)
-	err = parsePayload(c, &p)
+	err := util.ParsePayload(c, &p)
 	if err != nil {
-		output(c, o, err)
+		util.OutputError(c, err)
 
 		return
 	}
 
-	switch c.Request.Method {
-	case http.MethodGet:
-		if id == "" {
-			o, err = domain.FindFoo(c)
+	o, err := domain.CreateFoo(c, p)
+	util.Output(c, o, err)
+}
 
-			break
-		}
-
-		o, err = domain.GetFoo(c, id)
-	case http.MethodPost:
-		o, err = domain.CreateFoo(c, p)
-	case http.MethodPatch:
-		p.ID = id
-		o, err = domain.UpdateFoo(c, p)
-	case http.MethodDelete:
-		o, err = domain.RemoveFoo(c, id)
-	default:
-		c.Status(404)
+// UpdateFoo handler
+func UpdateFoo(c *gin.Context) {
+	p := new(model.Foo)
+	err := util.ParsePayload(c, &p)
+	if err != nil {
+		util.OutputError(c, err)
 
 		return
 	}
 
-	output(c, o, err)
+	p.ID = c.Param("id")
+	o, err := domain.UpdateFoo(c, p)
+	util.Output(c, o, err)
+}
+
+// RemoveFoo handler
+func RemoveFoo(c *gin.Context) {
+	id := c.Param("id")
+	o, err := domain.RemoveFoo(c, id)
+	util.Output(c, o, err)
 }

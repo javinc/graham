@@ -71,10 +71,7 @@ func (x *logic) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 	// write
 	p, err := x.Data.UpdateFoo(p)
 	if err != nil {
-		return p, &model.Error{
-			Code:    fooErrUpdate,
-			Message: err.Error(),
-		}
+		return p, err
 	}
 
 	return p, nil
