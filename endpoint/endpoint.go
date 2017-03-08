@@ -22,12 +22,12 @@ import (
 
 func output(c *gin.Context, data interface{}, err error) {
 	if err != nil {
-		stat := 400
+		stat := http.StatusBadRequest
 
 		// format generic error
 		if _, ok := err.(*model.Error); !ok {
 			err = &model.Error{
-				Code:    "GENERIC_ERR",
+				Code:    "GENERIC",
 				Message: err.Error(),
 			}
 		}
@@ -35,7 +35,7 @@ func output(c *gin.Context, data interface{}, err error) {
 		e := err.(*model.Error)
 		// check for internal errors
 		if e.Panic {
-			stat = 500
+			stat = http.StatusInternalServerError
 		}
 
 		c.JSON(stat, err)
@@ -44,7 +44,7 @@ func output(c *gin.Context, data interface{}, err error) {
 	}
 
 	// okay
-	c.JSON(200, data)
+	c.JSON(http.StatusOK, data)
 }
 
 func parsePayload(c *gin.Context, p interface{}) error {

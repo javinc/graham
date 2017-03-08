@@ -38,6 +38,10 @@ func Foo(c *gin.Context) {
 		o, err = domain.UpdateFoo(c, p)
 	case http.MethodDelete:
 		o, err = domain.RemoveFoo(c, id)
+	default:
+		c.Status(404)
+
+		return
 	}
 
 	output(c, o, err)

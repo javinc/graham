@@ -1,10 +1,20 @@
 package logic
 
 import (
-	"errors"
 	"strings"
 
 	"github.com/javinc/graham/model"
+)
+
+const (
+	fooErrFind        = "DOMAIN_FOO_FIND"
+	fooErrGet         = "DOMAIN_FOO_GET"
+	fooErrCreate      = "DOMAIN_FOO_CREATE"
+	fooErrCreateCheck = "DOMAIN_FOO_CREATE_CHECK"
+	fooErrUpdate      = "DOMAIN_FOO_UPDATE"
+	fooErrUpdateCheck = "DOMAIN_FOO_UPDATE_CHECK"
+	fooErrRemove      = "DOMAIN_FOO_REMOVE"
+	fooErrRemoveCheck = "DOMAIN_FOO_REMOVE_CHECK"
 )
 
 func (x *logic) FindFoo() ([]*model.Foo, error) {
@@ -29,8 +39,8 @@ func (x *logic) CreateFoo(p *model.Foo) (*model.Foo, error) {
 	// validation
 	if p.Title == "" {
 		return p, &model.Error{
-			Code:    "This is not food",
-			Message: "really!",
+			Code:    fooErrCreateCheck,
+			Message: "title field is required",
 		}
 	}
 
@@ -40,7 +50,10 @@ func (x *logic) CreateFoo(p *model.Foo) (*model.Foo, error) {
 	// write
 	r, err := x.Data.CreateFoo(p)
 	if err != nil {
-		return r, err
+		return r, &model.Error{
+			Code:    fooErrCreate,
+			Message: err.Error(),
+		}
 	}
 
 	return r, nil
@@ -49,13 +62,19 @@ func (x *logic) CreateFoo(p *model.Foo) (*model.Foo, error) {
 func (x *logic) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 	// validation
 	if p.ID == "" {
-		return p, errors.New("id is required")
+		return p, &model.Error{
+			Code:    fooErrUpdateCheck,
+			Message: "id field is required",
+		}
 	}
 
 	// write
 	p, err := x.Data.UpdateFoo(p)
 	if err != nil {
-		return p, err
+		return p, &model.Error{
+			Code:    fooErrUpdate,
+			Message: err.Error(),
+		}
 	}
 
 	return p, nil
