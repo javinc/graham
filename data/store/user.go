@@ -1,6 +1,17 @@
 package store
 
-import "github.com/javinc/graham/model"
+import (
+	"github.com/javinc/graham/data/store/util"
+	"github.com/javinc/graham/model"
+)
+
+const (
+	userTableName = "user"
+)
+
+func init() {
+	util.CreateTable(userTableName)
+}
 
 func (x *store) FindUser() ([]*model.User, error) {
 	l := []*model.User{}
