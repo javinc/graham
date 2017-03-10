@@ -1,7 +1,7 @@
 package store
 
 import (
-	"github.com/javinc/graham/data/store/util"
+	"github.com/javinc/graham/data/rethink"
 	"github.com/javinc/graham/model"
 )
 
@@ -10,7 +10,7 @@ const (
 )
 
 func init() {
-	util.CreateTable(userTableName)
+	rethink.CreateTable(userTableName)
 }
 
 func (x *store) FindUser() ([]*model.User, error) {

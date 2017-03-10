@@ -2,7 +2,7 @@ package store
 
 import (
 	"github.com/imdario/mergo"
-	"github.com/javinc/graham/data/store/util"
+	"github.com/javinc/graham/data/rethink"
 	"github.com/javinc/graham/model"
 )
 
@@ -20,12 +20,12 @@ const (
 )
 
 func init() {
-	util.CreateTable(fooTableName)
+	rethink.CreateTable(fooTableName)
 }
 
 func (x *store) FindFoo() ([]*model.Foo, error) {
 	r := []*model.Foo{}
-	err := util.Find(fooTableName, &r)
+	err := rethink.Find(fooTableName, &r)
 	if err != nil {
 		return r, &model.Error{
 			Code:    fooErrFind,
@@ -38,7 +38,7 @@ func (x *store) FindFoo() ([]*model.Foo, error) {
 
 func (x *store) FindOneFoo() ([]*model.Foo, error) {
 	r := []*model.Foo{}
-	err := util.FindOne(fooTableName, &r)
+	err := rethink.FindOne(fooTableName, &r)
 	if err != nil {
 		return r, &model.Error{
 			Code:    fooErrFindOne,
@@ -51,7 +51,7 @@ func (x *store) FindOneFoo() ([]*model.Foo, error) {
 
 func (x *store) GetFoo(id string) (*model.Foo, error) {
 	r := new(model.Foo)
-	err := util.Get(fooTableName, id, &r)
+	err := rethink.Get(fooTableName, id, &r)
 	if err != nil {
 		return r, &model.Error{
 			Code:    fooErrGet,
@@ -67,7 +67,7 @@ func (x *store) CreateFoo(p *model.Foo) (*model.Foo, error) {
 
 	// meta
 
-	id, err := util.Create(fooTableName, p)
+	id, err := rethink.Create(fooTableName, p)
 	if err != nil {
 		return p, &model.Error{
 			Code:    fooErrCreate,
@@ -93,7 +93,7 @@ func (x *store) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 
 	id := p.ID
 	p.ID = ""
-	err := util.Update(fooTableName, id, p)
+	err := rethink.Update(fooTableName, id, p)
 	if err != nil {
 		return r, &model.Error{
 			Code:    fooErrUpdate,
@@ -116,7 +116,7 @@ func (x *store) RemoveFoo(id string) (*model.Foo, error) {
 		}
 	}
 
-	err := util.Remove(fooTableName, id)
+	err := rethink.Remove(fooTableName, id)
 	if err != nil {
 		return r, &model.Error{
 			Code:    fooErrRemove,
