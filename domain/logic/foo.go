@@ -39,7 +39,7 @@ func (x *logic) CreateFoo(p *model.Foo) (*model.Foo, error) {
 	// validation
 	if p.Title == "" {
 		return p, &model.Error{
-			Code:    fooErrCreateCheck,
+			Name:    fooErrCreateCheck,
 			Message: "title field is required",
 		}
 	}
@@ -51,7 +51,7 @@ func (x *logic) CreateFoo(p *model.Foo) (*model.Foo, error) {
 	r, err := x.Data.CreateFoo(p)
 	if err != nil {
 		return r, &model.Error{
-			Code:    fooErrCreate,
+			Name:    fooErrCreate,
 			Message: err.Error(),
 		}
 	}
@@ -63,7 +63,7 @@ func (x *logic) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 	// validation
 	if p.ID == "" {
 		return p, &model.Error{
-			Code:    fooErrUpdateCheck,
+			Name:    fooErrUpdateCheck,
 			Message: "id field is required",
 		}
 	}

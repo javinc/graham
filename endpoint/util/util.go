@@ -27,7 +27,7 @@ func OutputError(c *gin.Context, err error) {
 	// format generic error
 	if _, ok := err.(*model.Error); !ok {
 		err = &model.Error{
-			Code:    "GENERIC",
+			Name:    "GENERIC",
 			Message: err.Error(),
 		}
 	}
@@ -44,7 +44,7 @@ func OutputError(c *gin.Context, err error) {
 // OutputNotFound response with 404
 func OutputNotFound(c *gin.Context) {
 	c.JSON(http.StatusNotFound, &model.Error{
-		Code:    "NOT_FOUND",
+		Name:    "NOT_FOUND",
 		Message: "404 not found",
 	})
 }
@@ -58,7 +58,7 @@ func ParsePayload(c *gin.Context, p interface{}) error {
 		if err != nil {
 			// modify error for more info
 			err = &model.Error{
-				Code:    "INVALID_JSON",
+				Name:    "INVALID_JSON",
 				Message: err.Error(),
 			}
 

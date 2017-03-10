@@ -28,7 +28,7 @@ func (x *store) FindFoo() ([]*model.Foo, error) {
 	err := rethink.Find(fooTableName, &r)
 	if err != nil {
 		return r, &model.Error{
-			Code:    fooErrFind,
+			Name:    fooErrFind,
 			Message: err.Error(),
 		}
 	}
@@ -41,7 +41,7 @@ func (x *store) FindOneFoo() ([]*model.Foo, error) {
 	err := rethink.FindOne(fooTableName, &r)
 	if err != nil {
 		return r, &model.Error{
-			Code:    fooErrFindOne,
+			Name:    fooErrFindOne,
 			Message: err.Error(),
 		}
 	}
@@ -54,7 +54,7 @@ func (x *store) GetFoo(id string) (*model.Foo, error) {
 	err := rethink.Get(fooTableName, id, &r)
 	if err != nil {
 		return r, &model.Error{
-			Code:    fooErrGet,
+			Name:    fooErrGet,
 			Message: err.Error(),
 		}
 	}
@@ -70,7 +70,7 @@ func (x *store) CreateFoo(p *model.Foo) (*model.Foo, error) {
 	id, err := rethink.Create(fooTableName, p)
 	if err != nil {
 		return p, &model.Error{
-			Code:    fooErrCreate,
+			Name:    fooErrCreate,
 			Message: err.Error(),
 		}
 	}
@@ -84,7 +84,7 @@ func (x *store) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 	r, _ := x.GetFoo(p.ID)
 	if r.ID == "" {
 		return r, &model.Error{
-			Code:    fooErrUpdateCheck,
+			Name:    fooErrUpdateCheck,
 			Message: "record does not exist",
 		}
 	}
@@ -96,7 +96,7 @@ func (x *store) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 	err := rethink.Update(fooTableName, id, p)
 	if err != nil {
 		return r, &model.Error{
-			Code:    fooErrUpdate,
+			Name:    fooErrUpdate,
 			Message: err.Error(),
 		}
 	}
@@ -111,7 +111,7 @@ func (x *store) RemoveFoo(id string) (*model.Foo, error) {
 	r, _ := x.GetFoo(id)
 	if r.ID == "" {
 		return r, &model.Error{
-			Code:    fooErrRemoveCheck,
+			Name:    fooErrRemoveCheck,
 			Message: "record does not exist",
 		}
 	}
@@ -119,7 +119,7 @@ func (x *store) RemoveFoo(id string) (*model.Foo, error) {
 	err := rethink.Remove(fooTableName, id)
 	if err != nil {
 		return r, &model.Error{
-			Code:    fooErrRemove,
+			Name:    fooErrRemove,
 			Message: err.Error(),
 		}
 	}
