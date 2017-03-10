@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+
 	"github.com/javinc/graham/data"
 	"github.com/javinc/graham/data/store"
 	"github.com/javinc/graham/domain"

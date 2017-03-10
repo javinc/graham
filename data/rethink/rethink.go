@@ -2,6 +2,7 @@ package rethink
 
 import (
 	r "github.com/gorethink/gorethink"
+
 	db "github.com/javinc/mango/database/rethink"
 )
 
