@@ -2,14 +2,14 @@ package rethink
 
 import (
 	r "github.com/gorethink/gorethink"
-
+	"github.com/javinc/mango/config"
 	db "github.com/javinc/mango/database/rethink"
 )
 
-// Init bootstrap
+// Init rethink bootstrap
 func init() {
 	db.Connect(db.Config{
-		Host:    "localhost:28015",
+		Host:    config.GetString("rethink.host"),
 		Db:      "graham",
 		MaxOpen: 100,
 	})

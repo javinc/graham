@@ -1,0 +1,11 @@
+live: false
+host: :8000
+rethink:
+  host: localhost:28015
+  db: graham
+  max_open: 100
+mail:
+  host: smtp.live.com
+  port: 587
+  user: dev@chiligarlic.com
+  pass: ^Sawsawan$~
