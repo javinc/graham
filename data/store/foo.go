@@ -1,6 +1,8 @@
 package store
 
 import (
+	"time"
+
 	"github.com/imdario/mergo"
 	"github.com/javinc/graham/data/rethink"
 	"github.com/javinc/graham/model"
@@ -63,9 +65,13 @@ func (x *store) GetFoo(id string) (*model.Foo, error) {
 }
 
 func (x *store) CreateFoo(p *model.Foo) (*model.Foo, error) {
-	// default
+	// default values
+	p.Taken = model.FalsePtr
 
 	// meta
+	t := time.Now()
+	p.CreatedAt = &t
+	p.UpdatedAt = &t
 
 	id, err := rethink.Create(fooTableName, p)
 	if err != nil {
@@ -89,7 +95,9 @@ func (x *store) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 		}
 	}
 
-	// meta
+	// meta update
+	t := time.Now()
+	p.UpdatedAt = &t
 
 	id := p.ID
 	p.ID = ""
