@@ -10,8 +10,8 @@ import (
 func init() {
 	db.Connect(db.Config{
 		Host:    config.GetString("rethink.host"),
-		Db:      "graham",
-		MaxOpen: 100,
+		Db:      config.GetString("rethink.db"),
+		MaxOpen: config.GetInt("rethink.max_open"),
 	})
 }
 

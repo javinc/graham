@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/javinc/mango/config"
 	"github.com/javinc/mango/server"
 
 	"github.com/javinc/graham/data"
@@ -22,7 +23,7 @@ func main() {
 	// routes
 	router.Routes(r)
 
-	r.Run(":8000")
+	r.Run(config.GetString("host"))
 }
 
 func middleware() gin.HandlerFunc {
