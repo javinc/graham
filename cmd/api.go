@@ -14,7 +14,14 @@ import (
 )
 
 func main() {
-	r := server.Engine()
+	m := gin.DebugMode
+
+	// set engine mode to produciton
+	if config.GetBool("live") {
+		m = gin.ReleaseMode
+	}
+
+	r := server.Engine(m)
 
 	// middlewares
 	r.Use(middleware())
