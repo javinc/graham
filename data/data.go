@@ -40,7 +40,7 @@ func UpdateFoo(c context.Context, p *model.Foo) (*model.Foo, error) {
 
 // RemoveFoo remove a Foo
 func RemoveFoo(c context.Context, id string) (*model.Foo, error) {
-	return FromContext(c).GetFoo(id)
+	return FromContext(c).RemoveFoo(id)
 }
 
 // FindUser returns a list of User
