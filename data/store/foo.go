@@ -4,8 +4,8 @@ import (
 	"time"
 
 	db "github.com/gorethink/gorethink"
-
 	"github.com/imdario/mergo"
+
 	"github.com/javinc/graham/data/rethink"
 	"github.com/javinc/graham/data/util"
 	"github.com/javinc/graham/model"
@@ -73,9 +73,6 @@ func (x *store) GetFoo(id string) (*model.Foo, error) {
 }
 
 func (x *store) CreateFoo(p *model.Foo) (*model.Foo, error) {
-	// default values
-	p.Taken = model.FalsePtr
-
 	// meta
 	t := time.Now()
 	p.CreatedAt = &t
