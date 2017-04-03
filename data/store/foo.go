@@ -33,25 +33,7 @@ func (x *store) FindFoo(o *model.FooOpts) ([]*model.Foo, error) {
 	// build query
 	q := db.Table(fooTableName)
 
-	// filter
-	if len(o.Filter) != 0 {
-		q = q.Filter(o.Filter)
-	}
-
-	// sort
-	if o.Order != "" {
-		q = q.OrderBy(util.ParseOptOrder(o.Order))
-	}
-
-	// slice
-	if o.Slice != "" {
-		q = q.Slice(util.ParseOptSlice(o.Slice))
-	}
-
-	// pluck
-	if o.Field != "" {
-		q = q.Pluck(util.ParseOptField(o.Field))
-	}
+	q = buildOpts(q, o)
 
 	err := rethink.Find(q, &r)
 	if err != nil {
@@ -159,4 +141,28 @@ func (x *store) RemoveFoo(id string) (*model.Foo, error) {
 	}
 
 	return r, nil
+}
+
+func buildOpts(q db.Term, o *model.FooOpts) db.Term {
+	// filter
+	if len(o.Filter) != 0 {
+		q = q.Filter(o.Filter)
+	}
+
+	// sort
+	if o.Order != "" {
+		q = q.OrderBy(util.ParseOptOrder(o.Order))
+	}
+
+	// slice
+	if o.Slice != "" {
+		q = q.Slice(util.ParseOptSlice(o.Slice))
+	}
+
+	// pluck
+	if o.Field != "" {
+		q = q.Pluck(util.ParseOptField(o.Field))
+	}
+
+	return q
 }
