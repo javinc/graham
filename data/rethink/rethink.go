@@ -1,8 +1,6 @@
 package rethink
 
 import (
-	"strings"
-
 	r "github.com/gorethink/gorethink"
 	"github.com/javinc/mango/config"
 	db "github.com/javinc/mango/database/rethink"
@@ -52,16 +50,4 @@ func Update(table, id string, input interface{}) error {
 // Remove base create query
 func Remove(table, id string) error {
 	return db.Remove(r.Table(table).Get(id).Delete())
-}
-
-// ParseResourceOrder parse sort option
-func ParseResourceOrder(order string) interface{} {
-	orders := strings.Split(strings.ToLower(strings.TrimSpace(order)), ",")
-	if len(orders) == 2 && orders[1] == "desc" {
-		// its desc
-		return r.Desc(orders[0])
-	}
-
-	// its asc
-	return orders[0]
 }

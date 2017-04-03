@@ -7,6 +7,7 @@ import (
 
 	"github.com/imdario/mergo"
 	"github.com/javinc/graham/data/rethink"
+	"github.com/javinc/graham/data/util"
 	"github.com/javinc/graham/model"
 )
 
@@ -31,10 +32,27 @@ func (x *store) FindFoo(o *model.FooOpts) ([]*model.Foo, error) {
 	r := []*model.Foo{}
 	// build query
 	q := db.Table(fooTableName)
+
 	// process options
 
+	// filter
+	if len(o.Filter) != 0 {
+		q = q.Filter(o.Filter)
+	}
+
+	// sort
 	if o.Order != "" {
-		q = q.OrderBy(rethink.ParseResourceOrder(o.Order))
+		q = q.OrderBy(util.ParseOptOrder(o.Order))
+	}
+
+	// slice
+	if o.Slice != "" {
+		q = q.Slice(util.ParseOptSlice(o.Slice))
+	}
+
+	// pluck
+	if o.Field != "" {
+		q = q.Pluck(util.ParseOptField(o.Field))
 	}
 
 	err := rethink.Find(q, &r)

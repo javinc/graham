@@ -11,7 +11,10 @@ import (
 // FindFoo handler
 func FindFoo(c *gin.Context) {
 	o, err := domain.FindFoo(c, &model.FooOpts{
-		Order: "title,asc",
+		Order:  c.Query("order"),
+		Slice:  c.Query("slice"),
+		Field:  c.Query("field"),
+		Filter: util.ParseFilter(c, model.Foo{}),
 	})
 	util.Output(c, o, err)
 }

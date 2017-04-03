@@ -2,6 +2,8 @@ package util
 
 import (
 	"net/http"
+	"reflect"
+	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -68,4 +70,41 @@ func ParsePayload(c *gin.Context, p interface{}) error {
 	}
 
 	return nil
+}
+
+// ParseFilter get filter option
+func ParseFilter(c *gin.Context, object interface{}) map[string]interface{} {
+	prefix := "filter."
+	params := c.Request.URL.Query()
+
+	m := map[string]interface{}{}
+	o := reflect.TypeOf(object)
+	for i := 0; i < o.NumField(); i++ {
+		field := o.Field(i).Tag.Get("json")
+		kind := reflect.ValueOf(object).Field(i).Kind()
+
+		// get first element because its the field name
+		fieldName := strings.Split(field, ",")[0]
+
+		// prefixed filter field name
+		filterName := prefix + fieldName
+		if v, ok := params[filterName]; ok {
+			switch kind {
+			case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+				num, _ := strconv.Atoi(v[0])
+				m[fieldName] = num
+			case reflect.String:
+				m[fieldName] = v[0]
+			case reflect.Bool:
+				b, _ := strconv.ParseBool(v[0])
+				m[fieldName] = b
+			case reflect.Ptr:
+				s := reflect.Indirect(reflect.ValueOf(v[0]))
+				b, _ := strconv.ParseBool(s.String())
+				m[fieldName] = b
+			}
+		}
+	}
+
+	return m
 }

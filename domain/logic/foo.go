@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"log"
 	"strings"
 
 	"github.com/javinc/graham/model"
@@ -18,6 +19,7 @@ const (
 )
 
 func (x *logic) FindFoo(o *model.FooOpts) ([]*model.Foo, error) {
+	log.Println(o)
 	r, err := x.Data.FindFoo(o)
 	if err != nil {
 		return r, err
