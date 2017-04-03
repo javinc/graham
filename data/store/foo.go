@@ -3,6 +3,8 @@ package store
 import (
 	"time"
 
+	db "github.com/gorethink/gorethink"
+
 	"github.com/imdario/mergo"
 	"github.com/javinc/graham/data/rethink"
 	"github.com/javinc/graham/model"
@@ -25,9 +27,17 @@ func init() {
 	rethink.CreateTable(fooTableName)
 }
 
-func (x *store) FindFoo() ([]*model.Foo, error) {
+func (x *store) FindFoo(o *model.FooOpts) ([]*model.Foo, error) {
 	r := []*model.Foo{}
-	err := rethink.Find(fooTableName, &r)
+	// build query
+	q := db.Table(fooTableName)
+	// process options
+
+	if o.Order != "" {
+		q = q.OrderBy(rethink.ParseResourceOrder(o.Order))
+	}
+
+	err := rethink.Find(q, &r)
 	if err != nil {
 		return r, &model.Error{
 			Name:    fooErrFind,

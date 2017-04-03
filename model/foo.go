@@ -13,3 +13,11 @@ type Foo struct {
 	CreatedAt   *time.Time `json:"created_at,omitempty"`
 	UpdatedAt   *time.Time `json:"updated_at,omitempty"`
 }
+
+// FooOpts test option model
+type FooOpts struct {
+	Order  string
+	Slice  string
+	Field  string
+	Filter map[string]interface{}
+}

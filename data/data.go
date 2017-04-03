@@ -20,7 +20,7 @@ import (
 
 // Data package definition
 type Data interface {
-	FindFoo() ([]*model.Foo, error)
+	FindFoo(o *model.FooOpts) ([]*model.Foo, error)
 	GetFoo(id string) (*model.Foo, error)
 	CreateFoo(p *model.Foo) (*model.Foo, error)
 	UpdateFoo(p *model.Foo) (*model.Foo, error)
@@ -31,8 +31,8 @@ type Data interface {
 }
 
 // FindFoo returns a list of Foo
-func FindFoo(c context.Context) ([]*model.Foo, error) {
-	return FromContext(c).FindFoo()
+func FindFoo(c context.Context, o *model.FooOpts) ([]*model.Foo, error) {
+	return FromContext(c).FindFoo(o)
 }
 
 // GetFoo returns a detail of Foo

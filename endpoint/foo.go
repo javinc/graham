@@ -10,7 +10,9 @@ import (
 
 // FindFoo handler
 func FindFoo(c *gin.Context) {
-	o, err := domain.FindFoo(c)
+	o, err := domain.FindFoo(c, &model.FooOpts{
+		Order: "title,asc",
+	})
 	util.Output(c, o, err)
 }
 

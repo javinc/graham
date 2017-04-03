@@ -17,8 +17,8 @@ const (
 	fooErrRemoveCheck = "DOMAIN_FOO_REMOVE_CHECK"
 )
 
-func (x *logic) FindFoo() ([]*model.Foo, error) {
-	r, err := x.Data.FindFoo()
+func (x *logic) FindFoo(o *model.FooOpts) ([]*model.Foo, error) {
+	r, err := x.Data.FindFoo(o)
 	if err != nil {
 		return r, err
 	}

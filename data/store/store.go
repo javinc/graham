@@ -6,12 +6,15 @@ import (
 )
 
 type store struct {
-	User *model.User
+	User   *model.User
+	Option map[string]interface{}
 }
 
 // New create new store object
 func New(u *model.User) data.Data {
-	d := &store{u}
+	d := &store{
+		User: u,
+	}
 
 	return d
 }
