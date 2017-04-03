@@ -6,7 +6,7 @@ import "time"
 type Foo struct {
 	ID          string     `data:"id,omitempty" json:"id,omitempty"          field:"string"`
 	UserID      string     `data:"user_id"      json:"user_id,omitempty"     field:"string"`
-	Title       string     `data:"title"        json:"title,omitempty"       field:"string,required"`
+	Title       string     `data:"title"        json:"title,omitempty"       field:"string"`
 	Description string     `data:"description"  json:"description,omitempty" field:"string"`
 	Age         int        `data:"age"          json:"age,omitempty"         field:"number"`
 	Taken       bool       `data:"taken"        json:"taken,omitempty"       field:"boolean"`
