@@ -32,7 +32,7 @@ func (x *store) FindFoo(o *model.FooOpts) ([]*model.Foo, error) {
 	r := []*model.Foo{}
 	// build query
 	q := db.Table(fooTableName)
-
+	// build query options
 	q = buildOpts(q, o)
 
 	err := rethink.Find(q, &r)
