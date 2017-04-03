@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/gorethink/gorethink"
+	r "github.com/gorethink/gorethink"
 )
 
 // ParseOptOrder parse sort option
@@ -12,7 +12,7 @@ func ParseOptOrder(order string) interface{} {
 	orders := strings.Split(strings.ToLower(strings.TrimSpace(order)), ",")
 	if len(orders) == 2 && orders[1] == "desc" {
 		// its desc
-		return gorethink.Desc(orders[0])
+		return r.Desc(orders[0])
 	}
 
 	// its asc

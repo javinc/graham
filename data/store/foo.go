@@ -33,8 +33,6 @@ func (x *store) FindFoo(o *model.FooOpts) ([]*model.Foo, error) {
 	// build query
 	q := db.Table(fooTableName)
 
-	// process options
-
 	// filter
 	if len(o.Filter) != 0 {
 		q = q.Filter(o.Filter)
