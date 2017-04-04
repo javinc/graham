@@ -37,8 +37,8 @@ func checkUser(payload map[string]interface{}) error {
 	id := payload["id"].(string)
 
 	// check if id exists
-	if id != "testUserx" {
-		return errors.New("THIS IS INVALID USER")
+	if id != "testUser" {
+		return errors.New("user has no access to this resource")
 	}
 
 	return nil
