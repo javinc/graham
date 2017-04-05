@@ -30,7 +30,7 @@ func Routes(r *gin.Engine) {
 	}
 
 	// catchers
-	r.NoRoute(notFound)
+	r.NoRoute(notFoundHandler)
 }
 
 func checkUser(payload map[string]interface{}) error {
@@ -44,7 +44,7 @@ func checkUser(payload map[string]interface{}) error {
 	return nil
 }
 
-func notFound(c *gin.Context) {
+func notFoundHandler(c *gin.Context) {
 	c.JSON(http.StatusNotFound, model.Error{
 		Name:    "NOT_FOUND",
 		Message: "resource not found",
