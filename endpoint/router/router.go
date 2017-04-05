@@ -37,7 +37,7 @@ func checkUser(payload map[string]interface{}) error {
 
 	// check if id exists
 	if id != "testUser" {
-		return errors.New("user has no access to this resource")
+		return errors.New("user has no access to this endpoint")
 	}
 
 	return nil
