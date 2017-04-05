@@ -23,12 +23,12 @@ func Routes(r *gin.Engine) {
 	r.GET("/user/:id", endpoint.GetUser)
 
 	// private
-	p := r.Group("/", middleware.PrivateMiddleware(checkUser))
+	p := r.Group("/", middleware.Auth(checkUser))
 	{
 		p.GET("/foox", endpoint.FindFoo)
 	}
 
-	// catchers
+	// catcher
 	r.NoRoute(util.OutputNotFound)
 }
 
