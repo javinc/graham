@@ -2,13 +2,12 @@ package router
 
 import (
 	"errors"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/javinc/mango/server/middleware"
 
 	"github.com/javinc/graham/endpoint"
-	"github.com/javinc/graham/model"
+	"github.com/javinc/graham/endpoint/util"
 )
 
 // Routes endpoint routes
@@ -30,7 +29,7 @@ func Routes(r *gin.Engine) {
 	}
 
 	// catchers
-	r.NoRoute(notFoundHandler)
+	r.NoRoute(util.OutputNotFound)
 }
 
 func checkUser(payload map[string]interface{}) error {
@@ -42,11 +41,4 @@ func checkUser(payload map[string]interface{}) error {
 	}
 
 	return nil
-}
-
-func notFoundHandler(c *gin.Context) {
-	c.JSON(http.StatusNotFound, model.Error{
-		Name:    "NOT_FOUND",
-		Message: "resource not found",
-	})
 }
