@@ -12,7 +12,7 @@ type store struct {
 // New create new store object
 func New(u *model.User) data.Data {
 	d := &store{
-		User: u,
+		u,
 	}
 
 	return d
