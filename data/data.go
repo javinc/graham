@@ -14,8 +14,11 @@ type Data interface {
 	UpdateFoo(p *model.Foo) (*model.Foo, error)
 	RemoveFoo(id string) (*model.Foo, error)
 
-	FindUser() ([]*model.User, error)
+	FindUser(o *model.UserOpts) ([]*model.User, error)
 	GetUser(id string) (*model.User, error)
+	CreateUser(p *model.User) (*model.User, error)
+	UpdateUser(p *model.User) (*model.User, error)
+	RemoveUser(id string) (*model.User, error)
 }
 
 // FindFoo returns a list of Foo
@@ -44,11 +47,26 @@ func RemoveFoo(c context.Context, id string) (*model.Foo, error) {
 }
 
 // FindUser returns a list of User
-func FindUser(c context.Context) ([]*model.User, error) {
-	return FromContext(c).FindUser()
+func FindUser(c context.Context, o *model.UserOpts) ([]*model.User, error) {
+	return FromContext(c).FindUser(o)
 }
 
 // GetUser returns a detail of User
 func GetUser(c context.Context, id string) (*model.User, error) {
 	return FromContext(c).GetUser(id)
+}
+
+// CreateUser create a User
+func CreateUser(c context.Context, p *model.User) (*model.User, error) {
+	return FromContext(c).CreateUser(p)
+}
+
+// UpdateUser update a User
+func UpdateUser(c context.Context, p *model.User) (*model.User, error) {
+	return FromContext(c).UpdateUser(p)
+}
+
+// RemoveUser remove a User
+func RemoveUser(c context.Context, id string) (*model.User, error) {
+	return FromContext(c).RemoveUser(id)
 }

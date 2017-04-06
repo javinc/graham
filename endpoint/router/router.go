@@ -24,13 +24,13 @@ func Routes(r *gin.Engine) {
 	r.PATCH("/foo/:id", endpoint.UpdateFoo)
 	r.DELETE("/foo/:id", endpoint.RemoveFoo)
 
-	r.GET("/user", endpoint.FindUser)
-	r.GET("/user/:id", endpoint.GetUser)
+	r.POST("/register", endpoint.Register)
+	r.GET("/login", endpoint.Login)
 
 	// private
 	p := r.Group("/", middleware.Auth(checkUser))
 	{
-		p.GET("/foox", endpoint.FindFoo)
+		p.GET("/me", endpoint.Me)
 	}
 
 	// catcher

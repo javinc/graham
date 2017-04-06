@@ -33,25 +33,12 @@ func (x *store) FindFoo(o *model.FooOpts) ([]*model.Foo, error) {
 	// build query
 	q := db.Table(fooTableName)
 	// build query options
-	q = buildOpts(q, o)
+	q = buildFooOpts(q, o)
 
 	err := rethink.Find(q, &r)
 	if err != nil {
 		return r, &model.Error{
 			Name:    fooErrFind,
-			Message: err.Error(),
-		}
-	}
-
-	return r, nil
-}
-
-func (x *store) FindOneFoo() ([]*model.Foo, error) {
-	r := []*model.Foo{}
-	err := rethink.FindOne(fooTableName, &r)
-	if err != nil {
-		return r, &model.Error{
-			Name:    fooErrFindOne,
 			Message: err.Error(),
 		}
 	}
@@ -140,7 +127,7 @@ func (x *store) RemoveFoo(id string) (*model.Foo, error) {
 	return r, nil
 }
 
-func buildOpts(q db.Term, o *model.FooOpts) db.Term {
+func buildFooOpts(q db.Term, o *model.FooOpts) db.Term {
 	// filter
 	if len(o.Filter) != 0 {
 		q = q.Filter(o.Filter)

@@ -26,6 +26,23 @@ func (x *logic) FindFoo(o *model.FooOpts) ([]*model.Foo, error) {
 	return r, nil
 }
 
+func (x *logic) FindOneFoo(o *model.FooOpts) (*model.Foo, error) {
+	d := new(model.Foo)
+	r, err := x.FindFoo(o)
+	if err != nil {
+		return d, err
+	}
+
+	if len(r) == 0 {
+		return d, &model.Error{
+			Name:    fooErrFind,
+			Message: "record not found",
+		}
+	}
+
+	return r[0], nil
+}
+
 func (x *logic) GetFoo(id string) (*model.Foo, error) {
 	r, err := x.Data.GetFoo(id)
 	if err != nil {

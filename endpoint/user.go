@@ -4,22 +4,34 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/javinc/graham/domain"
+	"github.com/javinc/graham/endpoint/util"
+	"github.com/javinc/graham/model"
 )
 
-// FindUser endpoint handler
-func FindUser(c *gin.Context) {
-	o, err := domain.FindUser(c)
+// Register handler
+func Register(c *gin.Context) {
+	p := new(model.User)
+	err := util.ParsePayload(c, &p)
 	if err != nil {
-		c.Error(err)
+		util.OutputError(c, err)
+
+		return
 	}
 
-	c.JSON(200, o)
+	o, err := domain.CreateUser(c, p)
+	util.Output(c, o, err)
 }
 
-// GetUser endpoint handler
-func GetUser(c *gin.Context) {
+// Login handler
+func Login(c *gin.Context) {
 	id := c.Param("id")
-	o, _ := domain.GetUser(c, id)
+	o, err := domain.GetUser(c, id)
+	util.Output(c, o, err)
+}
 
-	c.JSON(200, o)
+// Me handler
+func Me(c *gin.Context) {
+	id := c.Param("id")
+	o, err := domain.GetUser(c, id)
+	util.Output(c, o, err)
 }
