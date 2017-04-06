@@ -6,8 +6,7 @@ import (
 )
 
 type store struct {
-	User   *model.User
-	Option map[string]interface{}
+	User *model.User
 }
 
 // New create new store object

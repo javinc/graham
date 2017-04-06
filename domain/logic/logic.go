@@ -1,7 +1,10 @@
 package logic
 
 import (
+	"github.com/gin-gonic/gin"
+
 	"github.com/javinc/graham/data"
+	"github.com/javinc/graham/data/store"
 	"github.com/javinc/graham/domain"
 	"github.com/javinc/graham/model"
 )
@@ -15,10 +18,13 @@ type logic struct {
 }
 
 // New create new domain object
-func New(u *model.User, store data.Data) domain.Domain {
+func New(c *gin.Context, u *model.User) domain.Domain {
+	// data context creation
+	data.ToContext(c, store.New(u))
+
 	d := &logic{
 		u,
-		store,
+		data.FromContext(c),
 	}
 
 	return d
