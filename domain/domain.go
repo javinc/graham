@@ -8,6 +8,7 @@ import (
 
 // Domain package definition
 type Domain interface {
+	// foo
 	FindFoo(o *model.FooOpts) ([]*model.Foo, error)
 	FindOneFoo(o *model.FooOpts) (*model.Foo, error)
 	GetFoo(id string) (*model.Foo, error)
@@ -15,12 +16,17 @@ type Domain interface {
 	UpdateFoo(p *model.Foo) (*model.Foo, error)
 	RemoveFoo(id string) (*model.Foo, error)
 
+	// user
 	FindUser(o *model.UserOpts) ([]*model.User, error)
 	FindOneUser(o *model.UserOpts) (*model.User, error)
 	GetUser(id string) (*model.User, error)
 	CreateUser(p *model.User) (*model.User, error)
 	UpdateUser(p *model.User) (*model.User, error)
 	RemoveUser(id string) (*model.User, error)
+
+	// user auth
+	RegisterUser(p *model.User) (*model.User, error)
+	LoginUser(email, pass string) (map[string]interface{}, error)
 }
 
 // FindFoo returns a list of Foo
@@ -76,4 +82,14 @@ func UpdateUser(c context.Context, p *model.User) (*model.User, error) {
 // RemoveUser remove a User
 func RemoveUser(c context.Context, id string) (*model.User, error) {
 	return FromContext(c).RemoveUser(id)
+}
+
+// RegisterUser registers a User
+func RegisterUser(c context.Context, p *model.User) (*model.User, error) {
+	return FromContext(c).RegisterUser(p)
+}
+
+// LoginUser provides credential
+func LoginUser(c context.Context, email, pass string) (map[string]interface{}, error) {
+	return FromContext(c).LoginUser(email, pass)
 }

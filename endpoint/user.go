@@ -1,6 +1,8 @@
 package endpoint
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/javinc/graham/domain"
@@ -24,8 +26,22 @@ func Register(c *gin.Context) {
 
 // Login handler
 func Login(c *gin.Context) {
-	id := c.Param("id")
-	o, err := domain.GetUser(c, id)
+	type credential struct {
+		Email string `json:"email"`
+		Pass  string `json:"password"`
+	}
+
+	p := new(credential)
+	err := util.ParsePayload(c, &p)
+	if err != nil {
+		util.OutputError(c, err)
+
+		return
+	}
+
+	log.Println(p)
+
+	o, err := domain.LoginUser(c, p.Email, p.Pass)
 	util.Output(c, o, err)
 }
 

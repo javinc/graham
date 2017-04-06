@@ -73,11 +73,7 @@ func (x *logic) CreateUser(p *model.User) (*model.User, error) {
 	}
 
 	// no duplicate email
-	u, _ := x.FindOneUser(&model.UserOpts{
-		Filter: map[string]interface{}{
-			"email": p.Email,
-		},
-	})
+	u, _ := x.FindUserByEmail(p.Email)
 
 	if u.ID != "" {
 		return p, &model.Error{
@@ -127,6 +123,14 @@ func (x *logic) RemoveUser(id string) (*model.User, error) {
 	}
 
 	return r, nil
+}
+
+func (x *logic) FindUserByEmail(email string) (*model.User, error) {
+	return x.FindOneUser(&model.UserOpts{
+		Filter: map[string]interface{}{
+			"email": email,
+		},
+	})
 }
 
 func hash(s string) string {

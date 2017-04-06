@@ -25,7 +25,7 @@ func Routes(r *gin.Engine) {
 	r.DELETE("/foo/:id", endpoint.RemoveFoo)
 
 	r.POST("/register", endpoint.Register)
-	r.GET("/login", endpoint.Login)
+	r.POST("/login", endpoint.Login)
 
 	// private
 	p := r.Group("/", middleware.Auth(checkUser))
