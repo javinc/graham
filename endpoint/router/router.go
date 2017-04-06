@@ -57,6 +57,7 @@ func checkUser(c *gin.Context, payload map[string]interface{}) error {
 		return errors.New("user has no access to this endpoint")
 	}
 
+	// overrides initial instance on baseMiddleware in favor of user info
 	initContext(c, u)
 
 	return nil
