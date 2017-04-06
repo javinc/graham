@@ -32,6 +32,9 @@ func (x *store) FindFoo(o *model.FooOpts) ([]*model.Foo, error) {
 	r := []*model.Foo{}
 	// build query
 	q := db.Table(fooTableName)
+	// set owner
+	o.Filter["user_id"] = x.User.ID
+
 	// build query options
 	q = buildFooOpts(q, o)
 
@@ -56,6 +59,14 @@ func (x *store) GetFoo(id string) (*model.Foo, error) {
 		}
 	}
 
+	// check owner
+	if r.UserID != x.User.ID {
+		return new(model.Foo), &model.Error{
+			Name:    fooErrGet,
+			Message: "user record not found",
+		}
+	}
+
 	return r, nil
 }
 
@@ -64,6 +75,9 @@ func (x *store) CreateFoo(p *model.Foo) (*model.Foo, error) {
 	t := time.Now()
 	p.CreatedAt = &t
 	p.UpdatedAt = &t
+
+	// set owner
+	p.UserID = x.User.ID
 
 	id, err := rethink.Create(fooTableName, p)
 	if err != nil {
@@ -91,18 +105,16 @@ func (x *store) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 	t := time.Now()
 	p.UpdatedAt = &t
 
-	id := p.ID
-	p.ID = ""
-	err := rethink.Update(fooTableName, id, p)
+	// merge old values with the new
+	mergo.MergeWithOverwrite(r, p)
+
+	err := rethink.Update(fooTableName, r.ID, r)
 	if err != nil {
 		return r, &model.Error{
 			Name:    fooErrUpdate,
 			Message: err.Error(),
 		}
 	}
-
-	// merge old values with the new
-	mergo.MergeWithOverwrite(r, p)
 
 	return r, nil
 }

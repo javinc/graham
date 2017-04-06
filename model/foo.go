@@ -5,7 +5,7 @@ import "time"
 // Foo test model
 type Foo struct {
 	ID          string     `data:"id,omitempty" json:"id,omitempty"          field:"string"`
-	UserID      string     `data:"user_id"      json:"user_id,omitempty"     field:"string"`
+	UserID      string     `data:"user_id"      json:"-"                     field:"string"`
 	Title       string     `data:"title"        json:"title,omitempty"       field:"string"`
 	Description string     `data:"description"  json:"description,omitempty" field:"string"`
 	Age         int        `data:"age"          json:"age,omitempty"         field:"number"`

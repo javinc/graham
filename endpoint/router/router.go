@@ -18,12 +18,6 @@ func Routes(r *gin.Engine) {
 	r.Use(baseMiddleware())
 
 	// public
-	r.GET("/foo", endpoint.FindFoo)
-	r.POST("/foo", endpoint.CreateFoo)
-	r.GET("/foo/:id", endpoint.GetFoo)
-	r.PATCH("/foo/:id", endpoint.UpdateFoo)
-	r.DELETE("/foo/:id", endpoint.RemoveFoo)
-
 	r.POST("/register", endpoint.Register)
 	r.POST("/login", endpoint.Login)
 
@@ -31,6 +25,12 @@ func Routes(r *gin.Engine) {
 	p := r.Group("/", middleware.Auth(checkUser))
 	{
 		p.GET("/me", endpoint.Me)
+
+		p.GET("/foo", endpoint.FindFoo)
+		p.POST("/foo", endpoint.CreateFoo)
+		p.GET("/foo/:id", endpoint.GetFoo)
+		p.PATCH("/foo/:id", endpoint.UpdateFoo)
+		p.DELETE("/foo/:id", endpoint.RemoveFoo)
 	}
 
 	// catcher

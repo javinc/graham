@@ -28,6 +28,9 @@ func (x *logic) FindFoo(o *model.FooOpts) ([]*model.Foo, error) {
 
 func (x *logic) FindOneFoo(o *model.FooOpts) (*model.Foo, error) {
 	d := new(model.Foo)
+
+	// get only one record
+	o.Slice = "0,1"
 	r, err := x.FindFoo(o)
 	if err != nil {
 		return d, err

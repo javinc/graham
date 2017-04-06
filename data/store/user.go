@@ -91,18 +91,16 @@ func (x *store) UpdateUser(p *model.User) (*model.User, error) {
 	t := time.Now()
 	p.UpdatedAt = &t
 
-	id := p.ID
-	p.ID = ""
-	err := rethink.Update(userTableName, id, p)
+	// merge old values with the new
+	mergo.MergeWithOverwrite(r, p)
+
+	err := rethink.Update(userTableName, r.ID, r)
 	if err != nil {
 		return r, &model.Error{
-			Name:    userErrUpdate,
+			Name:    fooErrUpdate,
 			Message: err.Error(),
 		}
 	}
-
-	// merge old values with the new
-	mergo.MergeWithOverwrite(r, p)
 
 	return r, nil
 }
