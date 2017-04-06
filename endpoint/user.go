@@ -1,8 +1,6 @@
 package endpoint
 
 import (
-	"log"
-
 	"github.com/gin-gonic/gin"
 
 	"github.com/javinc/graham/domain"
@@ -39,15 +37,18 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	log.Println(p)
-
 	o, err := domain.LoginUser(c, p.Email, p.Pass)
 	util.Output(c, o, err)
 }
 
 // Me handler
 func Me(c *gin.Context) {
-	id := c.Param("id")
-	o, err := domain.GetUser(c, id)
+	o, err := domain.CurrentUser(c)
+	if err != nil {
+		util.OutputError(c, err)
+
+		return
+	}
+
 	util.Output(c, o, err)
 }

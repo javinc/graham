@@ -55,3 +55,18 @@ func (x *logic) LoginUser(email, pass string) (map[string]interface{}, error) {
 
 	return m, nil
 }
+
+func (x *logic) CurrentUser() (*model.User, error) {
+	u := x.User
+	if u.ID == "" {
+		return u, &model.Error{
+			Name:    userAuthErrKey + "NO_USER",
+			Message: "current not exists",
+		}
+	}
+
+	// mask password
+	u.Password = "******"
+
+	return u, nil
+}

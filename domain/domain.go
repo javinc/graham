@@ -27,6 +27,7 @@ type Domain interface {
 	// user auth
 	RegisterUser(p *model.User) (*model.User, error)
 	LoginUser(email, pass string) (map[string]interface{}, error)
+	CurrentUser() (*model.User, error)
 }
 
 // FindFoo returns a list of Foo
@@ -92,4 +93,9 @@ func RegisterUser(c context.Context, p *model.User) (*model.User, error) {
 // LoginUser provides credential
 func LoginUser(c context.Context, email, pass string) (map[string]interface{}, error) {
 	return FromContext(c).LoginUser(email, pass)
+}
+
+// CurrentUser provides authenticated request user info
+func CurrentUser(c context.Context) (*model.User, error) {
+	return FromContext(c).CurrentUser()
 }

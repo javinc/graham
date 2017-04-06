@@ -47,12 +47,11 @@ func baseMiddleware() gin.HandlerFunc {
 
 func checkUser(c *gin.Context, payload map[string]interface{}) error {
 	u := &model.User{
-		ID:   payload["id"].(string),
-		Name: payload["name"].(string),
+		ID: payload["id"].(string),
 	}
 
 	// check if user id exists
-	_, err := domain.GetUser(c, u.ID)
+	u, err := domain.GetUser(c, u.ID)
 	if err != nil {
 		return errors.New("user has no access to this endpoint")
 	}
