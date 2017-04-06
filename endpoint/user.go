@@ -24,12 +24,12 @@ func Register(c *gin.Context) {
 
 // Login handler
 func Login(c *gin.Context) {
-	type credential struct {
+	type form struct {
 		Email string `json:"email"`
 		Pass  string `json:"password"`
 	}
 
-	p := new(credential)
+	p := new(form)
 	err := util.ParsePayload(c, &p)
 	if err != nil {
 		util.OutputError(c, err)
