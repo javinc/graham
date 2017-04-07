@@ -1,8 +1,6 @@
 package logic
 
 import (
-	"log"
-
 	"github.com/gin-gonic/gin"
 
 	"github.com/javinc/graham/data"
@@ -23,7 +21,6 @@ type logic struct {
 func New(c *gin.Context, u *model.User) domain.Domain {
 	// data context creation
 	data.ToContext(c, store.New(u))
-	log.Println(data.FromContext(c))
 
 	d := &logic{
 		u,
