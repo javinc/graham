@@ -5,6 +5,7 @@ import (
 
 	db "github.com/gorethink/gorethink"
 	"github.com/imdario/mergo"
+	"github.com/javinc/mango/errors"
 
 	"github.com/javinc/graham/data/rethink"
 	"github.com/javinc/graham/data/util"
@@ -30,17 +31,16 @@ func init() {
 
 func (x *store) FindUser(o *model.UserOpts) ([]*model.User, error) {
 	r := []*model.User{}
+
 	// build query
 	q := db.Table(userTableName)
+
 	// build query options
 	q = buildUserOpts(q, o)
 
 	err := rethink.Find(q, &r)
 	if err != nil {
-		return r, &model.Error{
-			Name:    userErrFind,
-			Message: err.Error(),
-		}
+		return r, errors.NewError("STORE_USER_FIND", err)
 	}
 
 	return r, nil
@@ -50,10 +50,7 @@ func (x *store) GetUser(id string) (*model.User, error) {
 	r := new(model.User)
 	err := rethink.Get(userTableName, id, &r)
 	if err != nil {
-		return r, &model.Error{
-			Name:    userErrGet,
-			Message: err.Error(),
-		}
+		return r, errors.NewError("STORE_USER_GET", err)
 	}
 
 	return r, nil
@@ -67,10 +64,7 @@ func (x *store) CreateUser(p *model.User) (*model.User, error) {
 
 	id, err := rethink.Create(userTableName, p)
 	if err != nil {
-		return p, &model.Error{
-			Name:    userErrCreate,
-			Message: err.Error(),
-		}
+		return p, errors.NewError("STORE_USER_CREATE", err)
 	}
 
 	p.ID = id
@@ -81,10 +75,8 @@ func (x *store) CreateUser(p *model.User) (*model.User, error) {
 func (x *store) UpdateUser(p *model.User) (*model.User, error) {
 	r, _ := x.GetUser(p.ID)
 	if r.ID == "" {
-		return r, &model.Error{
-			Name:    userErrUpdateCheck,
-			Message: "record does not exist",
-		}
+		return r, errors.
+			New("STORE_USER_UPDATE_CHK", "record does not exist")
 	}
 
 	// meta update
@@ -96,10 +88,7 @@ func (x *store) UpdateUser(p *model.User) (*model.User, error) {
 
 	err := rethink.Update(userTableName, r.ID, r)
 	if err != nil {
-		return r, &model.Error{
-			Name:    userErrUpdate,
-			Message: err.Error(),
-		}
+		return r, errors.NewError("STORE_USER_UPDATE", err)
 	}
 
 	return r, nil
@@ -108,18 +97,13 @@ func (x *store) UpdateUser(p *model.User) (*model.User, error) {
 func (x *store) RemoveUser(id string) (*model.User, error) {
 	r, _ := x.GetUser(id)
 	if r.ID == "" {
-		return r, &model.Error{
-			Name:    userErrRemoveCheck,
-			Message: "record does not exist",
-		}
+		return r, errors.
+			New("STORE_USER_REMOVE_CHK", "record does not exist")
 	}
 
 	err := rethink.Remove(userTableName, id)
 	if err != nil {
-		return r, &model.Error{
-			Name:    userErrRemove,
-			Message: err.Error(),
-		}
+		return r, errors.NewError("STORE_USER_REMOVE", err)
 	}
 
 	return r, nil
