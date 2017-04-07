@@ -97,7 +97,7 @@ func (x *store) UpdateUser(p *model.User) (*model.User, error) {
 	err := rethink.Update(userTableName, r.ID, r)
 	if err != nil {
 		return r, &model.Error{
-			Name:    fooErrUpdate,
+			Name:    userErrUpdate,
 			Message: err.Error(),
 		}
 	}

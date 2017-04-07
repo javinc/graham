@@ -5,6 +5,7 @@ import (
 
 	db "github.com/gorethink/gorethink"
 	"github.com/imdario/mergo"
+	"github.com/javinc/mango/errors"
 
 	"github.com/javinc/graham/data/rethink"
 	"github.com/javinc/graham/data/util"
@@ -13,15 +14,6 @@ import (
 
 const (
 	fooTableName = "foo"
-
-	fooErrFind        = "DATA_FOO_FIND"
-	fooErrFindOne     = "DATA_FOO_FIND_ONE"
-	fooErrGet         = "DATA_FOO_GET"
-	fooErrCreate      = "DATA_FOO_CREATE"
-	fooErrUpdate      = "DATA_FOO_UPDATE"
-	fooErrUpdateCheck = "DATA_FOO_UPDATE_CHECK"
-	fooErrRemove      = "DATA_FOO_REMOVE"
-	fooErrRemoveCheck = "DATA_FOO_REMOVE_CHECK"
 )
 
 func init() {
@@ -30,8 +22,10 @@ func init() {
 
 func (x *store) FindFoo(o *model.FooOpts) ([]*model.Foo, error) {
 	r := []*model.Foo{}
+
 	// build query
 	q := db.Table(fooTableName)
+
 	// set owner
 	o.Filter["user_id"] = x.User.ID
 
@@ -40,10 +34,7 @@ func (x *store) FindFoo(o *model.FooOpts) ([]*model.Foo, error) {
 
 	err := rethink.Find(q, &r)
 	if err != nil {
-		return r, &model.Error{
-			Name:    fooErrFind,
-			Message: err.Error(),
-		}
+		return r, errors.NewError("STORE_FOO_FIND", err)
 	}
 
 	return r, nil
@@ -53,18 +44,13 @@ func (x *store) GetFoo(id string) (*model.Foo, error) {
 	r := new(model.Foo)
 	err := rethink.Get(fooTableName, id, &r)
 	if err != nil {
-		return r, &model.Error{
-			Name:    fooErrGet,
-			Message: err.Error(),
-		}
+		return r, errors.NewError("STORE_FOO_GET", err)
 	}
 
 	// check owner
 	if r.UserID != x.User.ID {
-		return new(model.Foo), &model.Error{
-			Name:    fooErrGet,
-			Message: "user record not found",
-		}
+		return new(model.Foo), errors.
+			New("STORE_FOO_GET_OWNER", "user record not found")
 	}
 
 	return r, nil
@@ -81,10 +67,7 @@ func (x *store) CreateFoo(p *model.Foo) (*model.Foo, error) {
 
 	id, err := rethink.Create(fooTableName, p)
 	if err != nil {
-		return p, &model.Error{
-			Name:    fooErrCreate,
-			Message: err.Error(),
-		}
+		return p, errors.NewError("STORE_FOO_CREATE", err)
 	}
 
 	p.ID = id
@@ -95,10 +78,8 @@ func (x *store) CreateFoo(p *model.Foo) (*model.Foo, error) {
 func (x *store) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 	r, _ := x.GetFoo(p.ID)
 	if r.ID == "" {
-		return r, &model.Error{
-			Name:    fooErrUpdateCheck,
-			Message: "record does not exist",
-		}
+		return r, errors.
+			New("STORE_FOO_UPDATE_CHK", "record does not exist")
 	}
 
 	// meta update
@@ -110,10 +91,7 @@ func (x *store) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 
 	err := rethink.Update(fooTableName, r.ID, r)
 	if err != nil {
-		return r, &model.Error{
-			Name:    fooErrUpdate,
-			Message: err.Error(),
-		}
+		return r, errors.NewError("STORE_FOO_UPDATE", err)
 	}
 
 	return r, nil
@@ -122,18 +100,13 @@ func (x *store) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 func (x *store) RemoveFoo(id string) (*model.Foo, error) {
 	r, _ := x.GetFoo(id)
 	if r.ID == "" {
-		return r, &model.Error{
-			Name:    fooErrRemoveCheck,
-			Message: "record does not exist",
-		}
+		return r, errors.
+			New("STORE_FOO_REMOVE_CHK", "record does not exist")
 	}
 
 	err := rethink.Remove(fooTableName, id)
 	if err != nil {
-		return r, &model.Error{
-			Name:    fooErrRemove,
-			Message: err.Error(),
-		}
+		return r, errors.NewError("STORE_FOO_REMOVE", err)
 	}
 
 	return r, nil
