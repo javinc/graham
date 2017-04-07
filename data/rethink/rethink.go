@@ -6,7 +6,7 @@ import (
 	db "github.com/javinc/mango/database/rethink"
 )
 
-// Init rethink bootstrap
+// init db connection
 func init() {
 	db.Connect(db.Config{
 		Host:    config.GetString("rethink.host"),
