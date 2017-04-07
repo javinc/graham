@@ -3,8 +3,9 @@ package logic
 import (
 	"strings"
 
-	"github.com/javinc/graham/model"
 	"github.com/javinc/mango/errors"
+
+	"github.com/javinc/graham/model"
 )
 
 func (x *logic) FindFoo(o *model.FooOpts) ([]*model.Foo, error) {

@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"github.com/javinc/mango/errors"
 	"github.com/javinc/mango/server/auth"
 
 	"github.com/javinc/graham/model"
@@ -31,10 +32,8 @@ func (x *logic) LoginUser(email, pass string) (map[string]interface{}, error) {
 
 	// check password
 	if hash(pass) != u.Password {
-		return m, &model.Error{
-			Name:    userAuthErrKey + "LOGIN",
-			Message: "invalid email or password",
-		}
+		return m, errors.
+			New("LOGIC_USER_AUTH_LOGIN", "invalid email or password")
 	}
 
 	m["id"] = u.ID
@@ -43,11 +42,7 @@ func (x *logic) LoginUser(email, pass string) (map[string]interface{}, error) {
 	// generate JWT
 	t, err := auth.CreateToken(m)
 	if err != nil {
-		return m, &model.Error{
-			Panic:   true,
-			Name:    userAuthErrKey + "JWT",
-			Message: err.Error(),
-		}
+		return m, errors.PanicError("LOGIC_USER_AUTH_JWT", err)
 	}
 
 	m["token"] = t
@@ -59,10 +54,8 @@ func (x *logic) LoginUser(email, pass string) (map[string]interface{}, error) {
 func (x *logic) CurrentUser() (*model.User, error) {
 	u := x.User
 	if u.ID == "" {
-		return u, &model.Error{
-			Name:    userAuthErrKey + "NO_USER",
-			Message: "current not exists",
-		}
+		return u, errors.
+			New("LOGIC_USER_AUTH_NO_USER", "current credentails not valid")
 	}
 
 	// mask password
