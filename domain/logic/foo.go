@@ -4,17 +4,7 @@ import (
 	"strings"
 
 	"github.com/javinc/graham/model"
-)
-
-const (
-	fooErrFind        = "DOMAIN_FOO_FIND"
-	fooErrGet         = "DOMAIN_FOO_GET"
-	fooErrCreate      = "DOMAIN_FOO_CREATE"
-	fooErrCreateCheck = "DOMAIN_FOO_CREATE_CHECK"
-	fooErrUpdate      = "DOMAIN_FOO_UPDATE"
-	fooErrUpdateCheck = "DOMAIN_FOO_UPDATE_CHECK"
-	fooErrRemove      = "DOMAIN_FOO_REMOVE"
-	fooErrRemoveCheck = "DOMAIN_FOO_REMOVE_CHECK"
+	"github.com/javinc/mango/errors"
 )
 
 func (x *logic) FindFoo(o *model.FooOpts) ([]*model.Foo, error) {
@@ -37,16 +27,19 @@ func (x *logic) FindOneFoo(o *model.FooOpts) (*model.Foo, error) {
 	}
 
 	if len(r) == 0 {
-		return d, &model.Error{
-			Name:    fooErrFind,
-			Message: "record not found",
-		}
+		return d, errors.New("LOGIC_FOO_FIND1", "record not found")
 	}
 
 	return r[0], nil
 }
 
 func (x *logic) GetFoo(id string) (*model.Foo, error) {
+	// validation
+	if id == "" {
+		return new(model.Foo), errors.
+			New("LOGIC_FOO_GET_CHK", "id param is required")
+	}
+
 	r, err := x.Data.GetFoo(id)
 	if err != nil {
 		return r, err
@@ -58,10 +51,7 @@ func (x *logic) GetFoo(id string) (*model.Foo, error) {
 func (x *logic) CreateFoo(p *model.Foo) (*model.Foo, error) {
 	// validation
 	if p.Title == "" {
-		return p, &model.Error{
-			Name:    fooErrCreateCheck,
-			Message: "title field is required",
-		}
+		return p, errors.New("LOGIC_FOO_CREATE_CHK", "title field is required")
 	}
 
 	// modification
@@ -70,10 +60,7 @@ func (x *logic) CreateFoo(p *model.Foo) (*model.Foo, error) {
 	// write
 	r, err := x.Data.CreateFoo(p)
 	if err != nil {
-		return r, &model.Error{
-			Name:    fooErrCreate,
-			Message: err.Error(),
-		}
+		return r, err
 	}
 
 	return r, nil
@@ -82,10 +69,7 @@ func (x *logic) CreateFoo(p *model.Foo) (*model.Foo, error) {
 func (x *logic) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 	// validation
 	if p.ID == "" {
-		return p, &model.Error{
-			Name:    fooErrUpdateCheck,
-			Message: "id field is required",
-		}
+		return p, errors.New("LOGIC_FOO_UPDATE_CHK", "id field is required")
 	}
 
 	// write
@@ -98,6 +82,12 @@ func (x *logic) UpdateFoo(p *model.Foo) (*model.Foo, error) {
 }
 
 func (x *logic) RemoveFoo(id string) (*model.Foo, error) {
+	// validation
+	if id == "" {
+		return new(model.Foo), errors.
+			New("LOGIC_FOO_REMOVE_CHK", "id param is required")
+	}
+
 	// write
 	r, err := x.Data.RemoveFoo(id)
 	if err != nil {

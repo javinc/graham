@@ -14,15 +14,6 @@ import (
 
 const (
 	userTableName = "user"
-
-	userErrFind        = "DATA_FOO_FIND"
-	userErrFindOne     = "DATA_FOO_FIND_ONE"
-	userErrGet         = "DATA_FOO_GET"
-	userErrCreate      = "DATA_FOO_CREATE"
-	userErrUpdate      = "DATA_FOO_UPDATE"
-	userErrUpdateCheck = "DATA_FOO_UPDATE_CHECK"
-	userErrRemove      = "DATA_FOO_REMOVE"
-	userErrRemoveCheck = "DATA_FOO_REMOVE_CHECK"
 )
 
 func init() {
