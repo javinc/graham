@@ -5,10 +5,10 @@ import (
 
 	db "github.com/gorethink/gorethink"
 	"github.com/imdario/mergo"
+	"github.com/javinc/mango/database/rethink/util"
 	"github.com/javinc/mango/errors"
 
 	"github.com/javinc/graham/data/rethink"
-	"github.com/javinc/graham/data/util"
 	"github.com/javinc/graham/model"
 )
 
