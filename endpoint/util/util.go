@@ -7,8 +7,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-
-	"github.com/javinc/graham/model"
+	"github.com/javinc/mango/errors"
 )
 
 // Output response
@@ -28,14 +27,14 @@ func OutputError(c *gin.Context, err error) {
 	stat := http.StatusBadRequest
 
 	// format generic error
-	if _, ok := err.(*model.Error); !ok {
-		err = &model.Error{
+	if _, ok := err.(*errors.Errors); !ok {
+		err = &errors.Errors{
 			Name:    "GENERIC",
 			Message: err.Error(),
 		}
 	}
 
-	e := err.(*model.Error)
+	e := err.(*errors.Errors)
 	// check for internal errors
 	if e.Panic {
 		stat = http.StatusInternalServerError
@@ -46,7 +45,7 @@ func OutputError(c *gin.Context, err error) {
 
 // OutputNotFound response with 404
 func OutputNotFound(c *gin.Context) {
-	c.JSON(http.StatusNotFound, &model.Error{
+	c.JSON(http.StatusNotFound, &errors.Errors{
 		Name:    "NOT_FOUND",
 		Message: "404 not found",
 	})
@@ -60,7 +59,7 @@ func ParsePayload(c *gin.Context, p interface{}) error {
 		err := c.BindJSON(p)
 		if err != nil {
 			// modify error for more info
-			err = &model.Error{
+			err = &errors.Errors{
 				Name:    "INVALID_JSON",
 				Message: err.Error(),
 			}
