@@ -9,9 +9,9 @@ import (
 // init db connection
 func init() {
 	rethink.Connect(rethink.Config{
-		Host:    config.GetString("rethink.host"),
-		Db:      config.GetString("rethink.db"),
-		MaxOpen: config.GetInt("rethink.max_open"),
+		config.GetString("rethink.host"),
+		config.GetString("rethink.db"),
+		config.GetInt("rethink.max_open"),
 	})
 }
 

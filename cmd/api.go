@@ -6,10 +6,15 @@ import (
 	"github.com/javinc/mango/server"
 
 	"github.com/javinc/graham/endpoint/router"
+	"github.com/javinc/graham/platform/mail"
 )
 
 func main() {
 	m := gin.DebugMode
+
+	// services
+	mail.Start()
+	mail.Test()
 
 	// set engine mode to produciton
 	if config.GetBool("live") {
