@@ -13,8 +13,8 @@ func main() {
 	m := gin.DebugMode
 
 	// services
+	mail.TmplPath = "./tmpl/mail/*.tmpl"
 	mail.Start()
-	mail.Test()
 
 	// set engine mode to produciton
 	if config.GetBool("live") {
